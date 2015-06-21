@@ -23,7 +23,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 
 			var velocity = GetHalfwayVelocity(ball);
 
-			var length = velocity.Speed.GetValue();
+			var length = velocity.Speed.Value;
 
 			var distance = Math.Max(MinimumDistanceFromBall, length - MaximumDistanceFromGoal);
 
@@ -49,11 +49,11 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 			// make of equal length.
 			if (vectorTop.Speed > vectorBot.Speed)
 			{
-				vectorTop.Scale(vectorBot.Speed.GetValue());
+				vectorTop.Scale(vectorBot.Speed.Value);
 			}
 			else
 			{
-				vectorBot.Scale(vectorTop.Speed.GetValue());
+				vectorBot.Scale(vectorTop.Speed.Value);
 			}
 
 			// Get the point halfway.

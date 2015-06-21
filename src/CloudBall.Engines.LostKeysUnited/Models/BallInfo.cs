@@ -44,7 +44,7 @@ namespace CloudBall.Engines.LostKeysUnited
 				(
 					"Ball, Pos: ({0:0.0}, {1:0.0}), Speed: {2:0.0}, Angle: {3:0}, Owner: {3}",
 					Position.X, Position.Y,
-					Velocity.Speed.GetValue(),
+					Velocity.Speed.Value,
 					Velocity.Angle,
 					Team
 				);

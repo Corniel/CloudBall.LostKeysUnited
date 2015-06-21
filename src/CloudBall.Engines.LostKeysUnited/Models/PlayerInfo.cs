@@ -90,7 +90,7 @@ namespace CloudBall.Engines.LostKeysUnited
 					Team,
 					(int)Number,
 					Position.X, Position.Y,
-					Velocity.Speed.GetValue(),
+					Velocity.Speed.Value,
 					Velocity.Angle
 				);
 			}

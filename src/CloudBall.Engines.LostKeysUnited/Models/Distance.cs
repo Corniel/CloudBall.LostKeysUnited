@@ -8,17 +8,31 @@ namespace CloudBall.Engines.LostKeysUnited
 	public struct Distance: IComparable, IComparable<Distance>
 	{
 		public static readonly Distance Zero = default(Distance);
-		public static readonly Distance MaxValue = new Distance(Single.MaxValue);
+		public static readonly Distance MaxValue = new Distance(Single.MaxValue, Mathematics.Sqrt(Single.MaxValue));
 
-		private Distance(Single distance2) { this.distance2 = distance2; }
+		private Distance(Single distance2, Single distance)
+		{
+			this.distance2 = distance2;
+			this.distance = distance;
+		}
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private Single distance2;
+		private Single distance;
 
 		/// <summary>Gets the non squared value.</summary>
 		/// <remarks>
-		/// This uses as Math.Sqrt and comes with a price.
+		/// The result is cached as it is an expensive operation.
 		/// </remarks>
-		public Single GetValue() { return Mathematics.Sqrt(distance2); }
+		public Single Value
+		{ 
+			get{
+				if(distance2 != 0 && distance == 0)
+				{
+					distance = Mathematics.Sqrt(distance2);
+				}
+				return distance;
+			}
+		}
 		public Single Squared { get { return distance2; } }
 
 		#region IComparable
@@ -44,19 +58,20 @@ namespace CloudBall.Engines.LostKeysUnited
 		public override bool Equals(object obj){return base.Equals(obj);}
 		public override int GetHashCode() { return distance2.GetHashCode(); }
 
-		public override string ToString() { return GetValue().ToString(); }
+		public override string ToString() { return Value.ToString(); }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
-		private Double DebuggerDisplay { get { return GetValue(); } }
+		private Single DebuggerDisplay { get { return Value; } }
 
 		/// <summary>Gets the distance between two points.</summary>
 		public static Distance Between(IPoint a, IPoint b)
 		{
 			var dx = a.X - b.X;
 			var dy = a.Y - b.Y;
-			return new Distance(dx * dx + dy * dy);
+			return new Distance(dx * dx + dy * dy, 0);
 		}
 
-		public static Distance Create(Single distance) { return new Distance(distance * distance); }
+		/// <summary>Creates a distance of specified length..</summary>
+		public static Distance Create(Single distance) { return new Distance(distance * distance, distance); }
 	}
 }

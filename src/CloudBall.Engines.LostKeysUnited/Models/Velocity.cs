@@ -35,7 +35,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public Single Y { get { return y; } }
 
 		public Distance Speed { get { return Distance.Between(default(Position), new Position(X, Y)); } }
-		public double Angle { get { return IsZero ? double.NaN : Math.Atan2(X, Y); } }
+		public Single Angle { get { return IsZero ? Single.NaN : Mathematics.Atan2(X, Y); } }
 
 		/// <summary>Gets the next velocity a ball has.</summary>
 		public Velocity NextBall { get { return new Velocity(X * BallInfo.Accelaration, Y *BallInfo.Accelaration); } }
@@ -47,7 +47,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public Velocity FlipVertical { get { return new Velocity(X, -Y); } }
 
 		/// <summary>Gets the normalized Velocity (speed = 1).</summary>
-		public Velocity Normalized { get { return new Velocity(X / (Single)Speed.GetValue(), Y / (Single)Speed.GetValue()); } }
+		public Velocity Normalized { get { return new Velocity(X / Speed.Value, Y / Speed.Value); } }
 
 		/// <summary>Scales the velocity to the preferred length
 		/// 
@@ -56,7 +56,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <returns></returns>
 		public Velocity Scale(Single length)
 		{
-			return new Velocity(length * X / (Single)Speed.GetValue(), length * Y / (Single)Speed.GetValue());
+			return new Velocity(length * X / Speed.Value, length * Y / Speed.Value);
 		}
 
 		#region Operations
@@ -86,11 +86,11 @@ namespace CloudBall.Engines.LostKeysUnited
 		public override int GetHashCode() { return x.GetHashCode() ^ y.GetHashCode(); }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
-		private string DebuggerDisplay { get { return string.Format(CultureInfo.InvariantCulture, "Speed: {0:0.00},  angle {1:0.0}", Speed.GetValue(), Angle * 360d / Math.PI); } }
+		private string DebuggerDisplay { get { return string.Format(CultureInfo.InvariantCulture, "Speed: {0:0.00},  angle {1:0.0}", Speed.Value, Angle * 360d / Math.PI); } }
 
-		public static Velocity FromAngle(double angle, float length = 1f)
+		public static Velocity FromAngle(Single angle, Single length = 1f)
 		{
-			var vector = new Velocity((Single)Math.Sin(angle) * length, (Single)Math.Cos(angle) * length);
+			var vector = new Velocity(Mathematics.Sin(angle) * length, Mathematics.Cos(angle) * length);
 			return vector;
 		}
 	}

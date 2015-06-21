@@ -1,31 +1,19 @@
-﻿using CloudBall.Engines.LostKeysUnited;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CloudBall.Engines.LostKeysUnited.Scenarios
+﻿namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
-	public class ShootOnGoal : IScenario
+	public class ShootOnGoal : ScenarioBase
 	{
-		public bool Apply(TurnInfos infos)
+		protected override bool ApplyScenario(TurnInfos infos)
 		{
 			var info = infos.Current;
 
 			if (!info.Ball.IsOwn) { return false; }
 
 			var closedToGoal = Goal.Other.GetClosestBy(info.Players);
-			
+
 			if (closedToGoal != info.Ball.Owner) { return false; }
 
 			closedToGoal.Apply(Actions.ShootOnOpenGoal());
-
-			foreach (var own in closedToGoal.GetOther(info.OwnPlayers))
-			{
-				own.Apply(Actions.Wait);
-			}
-
+			Dequeue(closedToGoal);
 			return true;
 		}
 	}

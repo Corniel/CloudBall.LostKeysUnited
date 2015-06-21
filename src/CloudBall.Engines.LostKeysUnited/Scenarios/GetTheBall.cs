@@ -2,9 +2,9 @@
 
 namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
-	public class GetTheBall : IScenario
+	public class GetTheBall : ScenarioBase
 	{
-		public bool Apply(TurnInfos infos)
+		protected override bool ApplyScenario(TurnInfos infos)
 		{
 			var info = infos.Current;
 			if (info.Ball.IsOwn || info.OwnPlayers.All(player => player.CanPickUpBall)) { return false; }
@@ -13,13 +13,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			if (getter.Key == null) { return false; }
 
 			getter.Key.Apply(Actions.Move(getter.Value.Position));
-
-			// TODO: don't spoil.
-			foreach (var player in getter.Key.GetOther(info.OwnPlayers))
-			{
-				player.Apply(Actions.Wait);
-			}
-
+			Dequeue(getter.Key);
 			return true;
 		}
 	}

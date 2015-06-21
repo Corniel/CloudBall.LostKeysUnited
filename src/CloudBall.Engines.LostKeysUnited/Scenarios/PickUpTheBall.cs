@@ -2,9 +2,9 @@
 
 namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
-	public class PickUpTheBall : IScenario
+	public class PickUpTheBall : ScenarioBase
 	{
-		public bool Apply(TurnInfos infos)
+		protected override bool ApplyScenario(TurnInfos infos)
 		{
 			var info = infos.Current;
 
@@ -15,14 +15,9 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 			// If we score and the other cannot pickup, we don't want to.
 			if (infos.BallPath.Ending == BallPath.End.GoalOwn && infos.CatchUp.Result == CatchUp.ResultType.Own) { return false; }
-			
-			pickup.Apply(Actions.PickUpBall);
 
-			// TODO: don't spoil 1 turn.
-			foreach(var player in pickup.GetOther(info.OwnPlayers))
-			{
-				player.Apply(Actions.Wait);
-			}
+			pickup.Apply(Actions.PickUpBall);
+			Dequeue(pickup);
 			return true;
 		}
 	}

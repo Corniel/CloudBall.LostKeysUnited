@@ -25,9 +25,23 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <summary>Gets the y coordinate of the position.</summary>
 		public Single Y { get { return y; } }
 
+
+		#region Operations
+
 		/// <summary>Adds the velocity to the position.</summary>
 		public Position Add(Velocity velocity) { return new Position(X + velocity.X, Y + velocity.Y); }
 		public static Position operator +(Position position, Velocity velocity) { return position.Add(velocity); }
+
+		/// <summary>Subtracts a position from this position.</summary>
+		public Position Subtract(Velocity velocity) { return new Position(X - velocity.X, Y - velocity.Y); }
+		public static Position operator -(Position position, Velocity velocity) { return position.Subtract(velocity); }
+
+
+		/// <summary>Subtracts a position from this position.</summary>
+		public Velocity Subtract(Position other) { return new Velocity(X - other.X, Y - other.Y); }
+		public static Velocity operator -(Position left, Position right) { return left.Subtract(right); }
+
+		#endregion
 
 		/// <summary>Gets the squared distance between this and the other position.</summary>
 		public Distance GetDistance(IPoint other) { return Distance.Between(this, other); }

@@ -49,13 +49,31 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <summary>Gets the normalized Velocity (speed = 1).</summary>
 		public Velocity Normalized { get { return new Velocity(X / (Single)Speed.GetValue(), Y / (Single)Speed.GetValue()); } }
 
-		/// <summary>Multiplies the Velocity with a factor.</summary>
+		/// <summary>Scales the velocity to the preferred length
+		/// 
+		/// </summary>
+		/// <param name="length"></param>
+		/// <returns></returns>
+		public Velocity Scale(Single length)
+		{
+			return new Velocity(length * X / (Single)Speed.GetValue(), length * Y / (Single)Speed.GetValue());
+		}
+
+		#region Operations
+
+		/// <summary>Adds a Velocity to this velocity.</summary>
 		public Velocity Add(Velocity other) { return new Velocity(X + other.X, Y + other.Y); }
 		public static Velocity operator +(Velocity left, Velocity right) { return left.Add(right); }
+
+		/// <summary>Subtracts a Velocity from this velocity.</summary>
+		public Velocity Subtract(Velocity other) { return new Velocity(X - other.X, Y - other.Y); }
+		public static Velocity operator -(Velocity left, Velocity right) { return left.Subtract(right); }
 
 		/// <summary>Multiplies the Velocity with a factor.</summary>
 		public Velocity Multiply(float factor) { return new Velocity(X * factor, Y * factor); }
 		public static Velocity operator *(Velocity velocity, float factor) { return velocity.Multiply(factor); }
+
+		#endregion
 
 		/// <summary>Casts the <see cref="Common.Vector"/> to a <see cref="CloudBall.Engines.LostKeysUnited.Velocity"/>.</summary>
 		public static implicit operator Velocity(Vector vector) { return new Velocity(vector.X, vector.Y); }

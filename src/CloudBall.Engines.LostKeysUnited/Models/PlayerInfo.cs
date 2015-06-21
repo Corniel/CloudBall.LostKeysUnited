@@ -50,7 +50,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public TeamType Team { get { return (TeamType)(Id >> 3); } }
 		public PlayerType Number { get { return (PlayerType)(Id & 7); } }
 
-		public Player Player { get; private set; }
+		internal Player Player { get; private set; }
 		public Position Position { get; private set; }
 		public Velocity Velocity { get; private set; }
 		public bool CanPickUpBall { get; private set; }
@@ -112,7 +112,7 @@ namespace CloudBall.Engines.LostKeysUnited
 
 			for (var speed = 0; speed <= 90; speed++)
 			{
-				var spe = (float)Math.Sqrt(speed / 10d);
+				var spe = Mathematics.Sqrt(speed / 10f);
 				var dis = 0f;
 				for (var turn = 0; turn < 1024; turn++)
 				{

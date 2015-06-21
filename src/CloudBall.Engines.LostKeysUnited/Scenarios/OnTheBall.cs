@@ -1,8 +1,8 @@
 ﻿namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
-	public class OnTheBall : IScenario
+	public class OnTheBall : ScenarioBase
 	{
-		public bool Apply(TurnInfos infos)
+		protected override bool ApplyScenario(TurnInfos infos)
 		{
 			var info = infos.Current;
 
@@ -11,11 +11,7 @@
 			var shooter = info.Ball.Owner;
 
 			shooter.Apply(Actions.ShootOnGoal());
-
-			foreach (var player in shooter.GetOther(info.OwnPlayers))
-			{
-				player.Apply(Actions.Wait);
-			}
+			Dequeue(shooter);
 			return true;
 		}
 	}

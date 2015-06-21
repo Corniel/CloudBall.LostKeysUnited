@@ -8,17 +8,18 @@ namespace CloudBall.Engines.LostKeysUnited
 	public struct Distance: IComparable, IComparable<Distance>
 	{
 		public static readonly Distance Zero = default(Distance);
-		public static readonly Distance MaxValue = new Distance(Double.MaxValue);
+		public static readonly Distance MaxValue = new Distance(Single.MaxValue);
 
-		private Distance(Double distance2) { this.distance2 = distance2; }
-		private Double distance2;
+		private Distance(Single distance2) { this.distance2 = distance2; }
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private Single distance2;
 
 		/// <summary>Gets the non squared value.</summary>
 		/// <remarks>
 		/// This uses as Math.Sqrt and comes with a price.
 		/// </remarks>
-		public Double GetValue() { return Math.Sqrt(distance2); }
-		public Double Squared { get { return distance2; } }
+		public Single GetValue() { return Mathematics.Sqrt(distance2); }
+		public Single Squared { get { return distance2; } }
 
 		#region IComparable
 
@@ -43,6 +44,8 @@ namespace CloudBall.Engines.LostKeysUnited
 		public override bool Equals(object obj){return base.Equals(obj);}
 		public override int GetHashCode() { return distance2.GetHashCode(); }
 
+		public override string ToString() { return GetValue().ToString(); }
+
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private Double DebuggerDisplay { get { return GetValue(); } }
 
@@ -54,6 +57,6 @@ namespace CloudBall.Engines.LostKeysUnited
 			return new Distance(dx * dx + dy * dy);
 		}
 
-		public static Distance Create(double distance) { return new Distance(distance * distance); }
+		public static Distance Create(Single distance) { return new Distance(distance * distance); }
 	}
 }

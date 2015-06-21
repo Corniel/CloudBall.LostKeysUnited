@@ -17,7 +17,7 @@ namespace CloudBall.Engines.LostKeysUnited
 			patternLayout.ActivateOptions();
 
 			var roller = new RollingFileAppender();
-			roller.AppendToFile = false;
+			roller.AppendToFile = true;
 			roller.File = @"LostKeysUnited_1.0.log";
 			roller.Layout = patternLayout;
 			roller.MaxSizeRollBackups = 5;

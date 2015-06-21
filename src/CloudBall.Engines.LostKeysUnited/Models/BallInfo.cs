@@ -8,6 +8,7 @@ namespace CloudBall.Engines.LostKeysUnited
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class BallInfo : IPoint
 	{
+		public const Single PowerToSpeed = 1.2f;
 		public const Single Accelaration = 0.9930925f;
 
 		public BallInfo(Position pos, Velocity vel, int pickuptimer, Ball ball, PlayerInfo owner)
@@ -19,11 +20,7 @@ namespace CloudBall.Engines.LostKeysUnited
 			Owner = owner;
 		}
 
-		public static BallInfo Create(Ball ball, PlayerInfo owner)
-		{
-			if (ball == null) { throw new ArgumentNullException("player"); }
-			return new BallInfo(ball.Position, ball.Velocity, ball.PickUpTimer, ball, owner);
-		}
+		
 
 		public Ball Ball { get; private set; }
 		public PlayerInfo Owner { get; private set; }
@@ -59,5 +56,16 @@ namespace CloudBall.Engines.LostKeysUnited
 		Single IPoint.Y { get { return Position.Y; } }
 
 		#endregion
+
+		public static BallInfo Create(Ball ball, PlayerInfo owner)
+		{
+			if (ball == null) { throw new ArgumentNullException("player"); }
+			return new BallInfo(ball.Position, ball.Velocity, ball.PickUpTimer, ball, owner);
+		}
+
+		public static Velocity CreateVelocity(IPoint ball, IPoint target, float power)
+		{
+			return new Velocity(target.X - ball.X, target.Y - ball.Y) * (power * PowerToSpeed);
+		}
 	}
 }

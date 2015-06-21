@@ -6,11 +6,10 @@ namespace CloudBall.Engines.LostKeysUnited
 	/// <summary>Shoots on a goal.</summary>
 	public struct ShootOnGoal : IAction
 	{
-		/// <summary>The poser to shoot with.</summary>
-		/// <remarks>
-		/// TODO: This should be calculated.
-		/// </remarks>
-		private const Single power = 10f;
+		public ShootOnGoal(Single power) { this.power = power; }
+
+		/// <summary>The power to shoot with.</summary>
+		private Single power;
 
 		/// <summary>Invokes the action.</summary>
 		public void Invoke(PlayerInfo player) { player.Player.ActionShoot(Goal.Other.Center.ToVector(), power); }

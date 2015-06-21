@@ -28,8 +28,13 @@ namespace CloudBall.Engines.LostKeysUnited
 
 			this[info.Turn] = pos;
 
+			Update(pos, vel);
+		}
+
+		private void Update(Position pos, Velocity vel)
+		{
 			// the ball rolls, we can calculate the path.
-			for (var turn = info.Turn + 1; turn <= Game.LastTurn; turn++)
+			for (var turn = Turn + 1; turn <= Game.LastTurn; turn++)
 			{
 				pos = pos + vel;
 				vel = vel.NextBall;
@@ -123,6 +128,18 @@ namespace CloudBall.Engines.LostKeysUnited
 				result[player] = GetCatchUp(player);
 			}
 			return result;
+		}
+
+		public static BallPath Create(Position ball, IPoint target, Single power, int turn)
+		{
+			var path = new BallPath() { Turn = turn };
+			path[turn] = ball;
+
+			Velocity velocity = BallInfo.CreateVelocity(ball, target, power);
+
+			path.Update(ball, velocity);
+
+			return path;
 		}
 	}
 }

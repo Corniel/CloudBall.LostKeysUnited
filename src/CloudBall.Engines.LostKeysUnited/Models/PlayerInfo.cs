@@ -57,7 +57,11 @@ namespace CloudBall.Engines.LostKeysUnited
 		public Int32 FallenTimer { get; private set; }
 		public Int32 TackleTimer { get; private set; }
 
-		public void Apply(IAction action) { action.Invoke(this); }
+		public PlayerInfo Apply(IAction action)
+		{
+			action.Invoke(this); 
+			return this;
+		}
 
 		public Velocity GetVelocity(IPoint destination)
 		{

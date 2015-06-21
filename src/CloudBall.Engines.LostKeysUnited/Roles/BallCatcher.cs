@@ -15,8 +15,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 
 			var catcher = kvp.Key;
 			var target = kvp.Value.Position;
-			catcher.Apply(Actions.Move(target));
-			return catcher;
+			return catcher.Apply(Actions.Move(target));
 		}
 	}
 }

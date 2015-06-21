@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_2.0</AssemblyName>
+    <AssemblyName>LostKeysUnited_3.0</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,6 +51,7 @@
     <Compile Include="Actions\Move.cs" />
     <Compile Include="Actions\IAction.cs" />
     <Compile Include="Actions\PickUpBall.cs" />
+    <Compile Include="Actions\Shoot.cs" />
     <Compile Include="Actions\ShootOnGoal.cs" />
     <Compile Include="Actions\Tackle.cs" />
     <Compile Include="Actions\Wait.cs" />

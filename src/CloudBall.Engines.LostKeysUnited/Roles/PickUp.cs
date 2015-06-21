@@ -16,8 +16,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 			// If we score and the other cannot pickup, we don't want to.
 			if (infos.BallPath.Ending == BallPath.End.GoalOwn && infos.CatchUp.Result == CatchUp.ResultType.Own) { return null; }
 
-			pickup.Apply(Actions.PickUpBall);
-			return pickup;
+			return pickup.Apply(Actions.PickUpBall);
 		}
 	}
 }

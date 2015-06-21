@@ -24,15 +24,11 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 
 			if (distance < 2 * MinimumDistanceFromBall)
 			{
-				keeper.Apply(Actions.Move(ball));
+				return keeper.Apply(Actions.Move(ball));
 			}
-			else
-			{
-				velocity = velocity.Scale(distance);
-				var target = ball + velocity;
-				keeper.Apply(Actions.Move(target));
-			}
-			return keeper;
+			velocity = velocity.Scale(distance);
+			var target = ball + velocity;
+			return keeper.Apply(Actions.Move(target));
 		}
 
 		public static Velocity GetHalfwayVelocity(Position ball)

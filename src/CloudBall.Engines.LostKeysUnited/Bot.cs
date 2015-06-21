@@ -5,7 +5,7 @@ using System;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	[BotName("Lost Keys United 2.0")]
+	[BotName("Lost Keys United 3.0")]
 	public class Bot : ITeam
 	{
 		public static ILog Log = LogManager.GetLogger(typeof(Bot));

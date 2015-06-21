@@ -6,7 +6,17 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
 	public abstract class ScenarioBase : IScenario
 	{
-		public ScenarioBase() { }
+		protected ScenarioBase()
+		{
+			Roles = new IRole[]
+			{
+				Role.PickUp,
+				Role.BallCatcher,
+				Role.Keeper,
+			};
+		}
+
+		protected IRole[] Roles { get; set; }
 
 		protected List<PlayerInfo> Queue { get; set; }
 		protected void Dequeue(PlayerInfo player)
@@ -30,9 +40,17 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 		protected virtual void ApplyDefault(TurnInfos infos)
 		{
-			Dequeue(Role.PickUp.Apply(infos, Queue));
-			Dequeue(Role.BallCatcher.Apply(infos, Queue));
-			Dequeue(Role.Keeper.Apply(infos, Queue));
+			foreach (var role in Roles)
+			{
+				Dequeue(role.Apply(infos, Queue));
+			}
+
+			var closed = Goal.Other.GetClosestBy(Queue);
+			if (closed != null & Goal.Other.GetDistance(closed) > Distance.Create(500))
+			{
+				Dequeue(closed.Apply(Actions.Move(Goal.Other.Center)));
+			}
+
 		}
 	}
 }

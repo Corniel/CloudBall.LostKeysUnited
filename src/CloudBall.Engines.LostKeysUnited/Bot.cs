@@ -17,11 +17,8 @@ namespace CloudBall.Engines.LostKeysUnited
 			Turns = new TurnInfos();
 			Scenarios = new IScenario[]
 			{
-				Scenario.ShootOnGoal,
-				Scenario.OnTheBall,
-				Scenario.PickUpTheBall,
-				Scenario.GetTheBall,
-				Scenario.Wait,
+				Scenario.Possession,
+				Scenario.Default,
 			};
 		}
 

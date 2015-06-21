@@ -24,7 +24,7 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		public List<PlayerInfo> Players { get; set; }
 		public IEnumerable<PlayerInfo> OwnPlayers { get { return Players.Where(player => player.Team == TeamType.Own); } }
-		public IEnumerable<PlayerInfo> OthePlayers { get { return Players.Where(player => player.Team == TeamType.Other); } }
+		public IEnumerable<PlayerInfo> OtherPlayers { get { return Players.Where(player => player.Team == TeamType.Other); } }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay

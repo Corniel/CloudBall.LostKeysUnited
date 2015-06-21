@@ -9,7 +9,13 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 		public ScenarioBase() { }
 
 		protected List<PlayerInfo> Queue { get; set; }
-		protected void Dequeue(PlayerInfo player){Queue.Remove(player);}
+		protected void Dequeue(PlayerInfo player)
+		{
+			if (player != null)
+			{
+				Queue.Remove(player);
+			}
+		}
 
 		public bool Apply(TurnInfos infos)
 		{
@@ -24,15 +30,9 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 		protected virtual void ApplyDefault(TurnInfos infos)
 		{
-			var keeper = Keeper.Select(Queue);
-			keeper.Apply(infos);
-			Dequeue(keeper.Player);
-
-			// TODO: don't spoil.
-			foreach (var player in Queue)
-			{
-				player.Apply(Actions.Wait);
-			}
+			Dequeue(Role.PickUp.Apply(infos, Queue));
+			Dequeue(Role.BallCatcher.Apply(infos, Queue));
+			Dequeue(Role.Keeper.Apply(infos, Queue));
 		}
 	}
 }

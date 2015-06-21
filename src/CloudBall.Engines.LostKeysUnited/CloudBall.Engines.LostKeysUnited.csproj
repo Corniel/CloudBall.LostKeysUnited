@@ -74,16 +74,16 @@
     <Compile Include="Models\TurnInfos.cs" />
     <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="Roles\BallCatcher.cs" />
     <Compile Include="Roles\IRole.cs" />
     <Compile Include="Roles\Keeper.cs" />
-    <Compile Include="Scenarios\GetTheBall.cs" />
+    <Compile Include="Roles\PickUp.cs" />
     <Compile Include="Scenarios\IScenario.cs" />
-    <Compile Include="Scenarios\OnTheBall.cs" />
+    <Compile Include="Scenarios\Possession.cs" />
     <Compile Include="Scenario.cs" />
-    <Compile Include="Scenarios\PickUpTheBall.cs" />
     <Compile Include="Scenarios\ScenarioBase.cs" />
-    <Compile Include="Scenarios\ShootOnGoal.cs" />
-    <Compile Include="Scenarios\Wait.cs" />
+    <Compile Include="Scenarios\Default.cs" />
     <Compile Include="Models\TurnPosition.cs" />
     <Compile Include="Models\Velocity.cs" />
   </ItemGroup>

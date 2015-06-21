@@ -21,22 +21,24 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 			if (CanShootOnOpenGoal(info)) { }
 			else if (CanShootOnGoal(info)) { }
-			else if (CanPass(info)) { }
+			//else if (CanPass(info)) { }
+			//else
+			//{
+			//	var possessor = info.Ball.Owner;
+
+			//	if (Goal.Other.GetDistance(possessor) > Distance.Create(1000))
+			//	{
+			//		var y = possessor.Position.Y < Goal.Other.Center.Y ? Game.Field.MinimumY : Game.Field.MinimumY;
+			//		var target = new Position(Goal.Other.X, y);
+			//		Dequeue(possessor.Apply(Actions.Shoot(target, 10f)));
+			//	}
 			else
 			{
 				var possessor = info.Ball.Owner;
-
-				if (Goal.Other.GetDistance(possessor) > Distance.Create(1000))
-				{
-					var y = possessor.Position.Y < Goal.Other.Center.Y ? Game.Field.MinimumY : Game.Field.MinimumY;
-					var target = new Position(Goal.Other.X, y);
-					Dequeue(possessor.Apply(Actions.Shoot(target, 10f)));
-				}
-				else
-				{
-					Dequeue(possessor.Apply(Actions.ShootOnGoal(10)));
-				}
+				Dequeue(possessor.Apply(Actions.ShootOnGoal(10)));
 			}
+			//}
+			
 			return true;
 		}
 

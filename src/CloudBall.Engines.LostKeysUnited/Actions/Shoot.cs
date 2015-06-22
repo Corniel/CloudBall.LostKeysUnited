@@ -1,5 +1,4 @@
-﻿using CloudBall.Engines.LostKeysUnited;
-using System;
+﻿using System;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
@@ -19,5 +18,11 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		/// <summary>Invokes the action.</summary>
 		public void Invoke(PlayerInfo player) { player.Player.ActionShoot(target.ToVector(), power); }
+
+		/// <summary>Represents the action as <see cref="System.String"/>.</summary>
+		public override string ToString()
+		{
+			return String.Format("Shoot {0}, power: {1}", target, power);
+		}
 	}
 }

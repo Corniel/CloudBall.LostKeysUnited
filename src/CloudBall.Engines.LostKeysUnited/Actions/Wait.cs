@@ -1,4 +1,5 @@
 ﻿using CloudBall.Engines.LostKeysUnited;
+using System;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
@@ -6,12 +7,15 @@ namespace CloudBall.Engines.LostKeysUnited
 	{
 		/// <summary>Invokes the wait action.</summary>
 		/// <remarks>
-		/// As don't calling this makes no difference, and calling sometimes
-		/// ended up having null reference exceptions, the call itself is
-		/// not executed.
+		/// Calling sometimes ended up having null reference exceptions.
 		/// </remarks>
-		public void Invoke(PlayerInfo player) {/* player.Player.ActionWait();*/ }
+		public void Invoke(PlayerInfo player)
+		{
+			try { player.Player.ActionWait(); }
+			catch (NullReferenceException) { }
+		}
 
+		/// <summary>Represents the action as <see cref="System.String"/>.</summary>
 		public override string ToString() { return "Wait"; }
 	}
 }

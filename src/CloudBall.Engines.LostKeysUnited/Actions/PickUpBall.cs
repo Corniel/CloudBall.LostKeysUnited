@@ -6,6 +6,7 @@ namespace CloudBall.Engines.LostKeysUnited
 	{
 		public void Invoke(PlayerInfo player) { player.Player.ActionPickUpBall(); }
 
+		/// <summary>Represents the action as <see cref="System.String"/>.</summary>
 		public override string ToString() { return "PickUpBall"; }
 	}
 }

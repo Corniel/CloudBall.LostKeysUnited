@@ -13,6 +13,8 @@ namespace CloudBall.Engines.LostKeysUnited
 
 	public static class PointExtensions
 	{
+		public static Position ToPosition(this IPoint point) { return new Position(point.X, point.Y); }
+
 		public static Vector ToVector(this IPoint point) { return new Vector(point.X, point.Y); }
 
 		public static T GetClosestBy<T>(this IPoint target, IEnumerable<T> candidates) where T : IPoint

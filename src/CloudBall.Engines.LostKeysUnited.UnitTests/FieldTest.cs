@@ -1,11 +1,24 @@
 ﻿using CloudBall.Engines.LostKeysUnited;
 using NUnit.Framework;
+using System.Linq;
 
 namespace CloudBall.Engines.LostKeysUnited.UnitTests
 {
 	[TestFixture]
 	public class FieldTest
 	{
+		[Test]
+		public void Create_20_()
+		{
+			var act = FieldInfo.Create(20);
+
+			Assert.AreEqual(5184, act.Count, "act.Count");
+			Assert.AreEqual(1822, act.Count(zone => zone.CheckShotOnGoal), "Count.CheckShotOnGoal");
+			Assert.AreEqual(4.0, act.Sum(zone => zone.Neighbors.Length) / (double)act.Count, 0.1, "Avg.Neighbors");
+			Assert.AreEqual(2010.0, act.Sum(zone => zone.Targets.Count) / (double)act.Count, 100, "Avg.Neighbors");
+		}
+
+
 		[Test]
 		public void GetQuadrant_somefields_DifferentQuadrants()
 		{

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	[DebuggerDisplay("{DebuggerDisplay}")]
-	public struct Distance: IComparable, IComparable<Distance>
+	[Serializable, DebuggerDisplay("{DebuggerDisplay}")]
+	public struct Distance: ISerializable, IComparable, IComparable<Distance>
 	{
 		public static readonly Distance Zero = default(Distance);
 		public static readonly Distance MaxValue = new Distance(Single.MaxValue, Mathematics.Sqrt(Single.MaxValue));
@@ -35,6 +36,17 @@ namespace CloudBall.Engines.LostKeysUnited
 		}
 		public Single Squared { get { return distance2; } }
 
+		#region ISerializable
+
+		private Distance(SerializationInfo info, StreamingContext context) : this(info.GetSingle("d2"), 0) { }
+
+		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("d2", distance2);
+		}
+
+		#endregion
+
 		#region IComparable
 
 		public int CompareTo(object obj)
@@ -58,7 +70,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public override bool Equals(object obj){return base.Equals(obj);}
 		public override int GetHashCode() { return distance2.GetHashCode(); }
 
-		public override string ToString() { return Value.ToString(); }
+		public override string ToString() { return Value.ToString("0.#######"); }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private Single DebuggerDisplay { get { return Value; } }
@@ -72,6 +84,6 @@ namespace CloudBall.Engines.LostKeysUnited
 		}
 
 		/// <summary>Creates a distance of specified length..</summary>
-		public static Distance Create(Single distance) { return new Distance(distance * distance, distance); }
+		public static Distance Create(Single distance) { return new Distance(distance * distance, Mathematics.Abs(distance)); }
 	}
 }

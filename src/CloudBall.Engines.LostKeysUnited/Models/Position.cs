@@ -3,11 +3,12 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	[DebuggerDisplay("{DebuggerDisplay}")]
-	public struct Position : IPoint
+	[Serializable, DebuggerDisplay("{DebuggerDisplay}")]
+	public struct Position : IPoint, ISerializable
 	{
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private Single x;
@@ -25,6 +26,21 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <summary>Gets the y coordinate of the position.</summary>
 		public Single Y { get { return y; } }
 
+		#region ISerializable
+
+		private Position(SerializationInfo info, StreamingContext context)
+		{
+			x = info.GetSingle("x");
+			y = info.GetSingle("y");
+		}
+
+		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("x", x);
+			info.AddValue("y", y);
+		}
+
+		#endregion
 
 		#region Operations
 

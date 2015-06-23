@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_3.1</AssemblyName>
+    <AssemblyName>LostKeysUnited_4.0</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -60,6 +60,10 @@
     <Compile Include="Mathantics.cs" />
     <Compile Include="Models\Distance.cs" />
     <Compile Include="Models\CatchUp.cs" />
+    <Compile Include="Models\FieldInfo.io.cs" />
+    <Compile Include="Models\FieldInitSettings.cs" />
+    <Compile Include="Models\FieldPath.cs" />
+    <Compile Include="Models\FieldZone.cs" />
     <Compile Include="Models\IPoint.cs" />
     <Compile Include="Models\BallInfo.cs" />
     <Compile Include="Models\BallPath.cs" />
@@ -87,6 +91,7 @@
     <Compile Include="Scenarios\Default.cs" />
     <Compile Include="Models\TurnPosition.cs" />
     <Compile Include="Models\Velocity.cs" />
+    <Compile Include="Serialization\FieldSerializationInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -97,6 +102,7 @@
       <Name>CloudBall.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	   Other similar extension points exist, see Microsoft.Common.targets.

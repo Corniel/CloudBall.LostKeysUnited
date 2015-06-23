@@ -15,8 +15,8 @@ namespace CloudBall
 			var teams = new List<ITeam>()
 			{
 				new CloudBall.Engines.LostKeysUnited.Bot(),
+				//TeamFactory.Load(@"*\Arena\Engines\Wolkenhondjes_6.1.dll"),
 				new SimpleStart(),
-				new Dummy(),
 			};
 
 			using (Client.Client client = new Client.Client(teams[0], teams[1]))

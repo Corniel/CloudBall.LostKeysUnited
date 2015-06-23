@@ -20,8 +20,6 @@ namespace CloudBall.Engines.LostKeysUnited
 			Owner = owner;
 		}
 
-		
-
 		public Ball Ball { get; private set; }
 		public PlayerInfo Owner { get; private set; }
 		public Position Position { get; private set; }
@@ -31,6 +29,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public TeamType Team { get { return Owner == null ? TeamType.None : Owner.Team; } }
 		public bool IsOwn { get { return Team == TeamType.Own; } }
 		public bool IsOther { get { return Team == TeamType.Other; } }
+		public bool HasOwner { get { return Owner != null; } }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay
@@ -65,7 +64,7 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		public static Velocity CreateVelocity(IPoint ball, IPoint target, float power)
 		{
-			return new Velocity(target.X - ball.X, target.Y - ball.Y) * (power * PowerToSpeed);
+			return new Velocity(target.X - ball.X, target.Y - ball.Y).Scale(power * PowerToSpeed);
 		}
 	}
 }

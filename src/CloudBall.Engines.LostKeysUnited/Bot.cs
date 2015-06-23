@@ -2,24 +2,48 @@
 using Common;
 using log4net;
 using System;
+using System.Diagnostics;
+using System.IO;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
 	[BotName("Lost Keys United 4.0")]
 	public class Bot : ITeam
 	{
+		/// <summary>Gets the location of the assembly of the bot.</summary>
+		public static FileInfo Location
+		{
+			get
+			{
+				return new FileInfo(typeof(Bot).Assembly.Location);
+			}
+		}
+
 		public static ILog Log = LogManager.GetLogger(typeof(Bot));
 
 		/// <summary>Creates a new instance of the bot.</summary>
 		public Bot()
 		{
 			Logging.Setup();
-			Turns = new TurnInfos();
-			Scenarios = new IScenario[]
+
+			try
 			{
-				Scenario.Possession,
-				Scenario.Default,
-			};
+				var sw = Stopwatch.StartNew();
+				FieldInfo.Instance = FieldInfo.Load(Location.FullName + ".dat");
+				Log.DebugFormat("Init of Field took {0:0.000} seconds.", sw.Elapsed.TotalSeconds);
+				Turns = new TurnInfos();
+				Scenarios = new IScenario[]
+				{
+					Scenario.Possession,
+					Scenario.Default,
+				};
+			}
+			catch (Exception x)
+			{
+				Log.Fatal("Constructor failed:", x);
+				throw;
+			}
+			
 		}
 
 		public TurnInfos Turns { get; private set; }
@@ -43,7 +67,7 @@ namespace CloudBall.Engines.LostKeysUnited
 			}
 			catch (Exception x)
 			{
-				Log.Fatal("Uncatched:", x);
+				Log.Error("Action failed:", x);
 			}
 		}
 	}

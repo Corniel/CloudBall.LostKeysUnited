@@ -49,7 +49,8 @@
   <ItemGroup>
     <Compile Include="BallInfoTest.cs" />
     <Compile Include="BallPathTest.cs" />
-    <Compile Include="FieldTest.cs" />
+    <Compile Include="FieldInfoTest.cs" />
+    <Compile Include="FieldInitSettingsTest.cs" />
     <Compile Include="GoalTest.cs" />
     <Compile Include="PlayerInfoTest.cs" />
     <Compile Include="Stub.cs" />

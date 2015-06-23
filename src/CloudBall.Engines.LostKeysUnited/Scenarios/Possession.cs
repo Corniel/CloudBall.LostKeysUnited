@@ -1,4 +1,7 @@
 ﻿using CloudBall.Engines.LostKeysUnited.Roles;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
 	public class Possession : ScenarioBase
@@ -19,26 +22,33 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 			if (!info.Ball.IsOwn) { return false; }
 
-			if (CanShootOnOpenGoal(info)) { }
-			else if (CanShootOnGoal(info)) { }
-			//else if (CanPass(info)) { }
-			//else
-			//{
-			//	var possessor = info.Ball.Owner;
+			var targets = new List<FieldZone>();
+			var possessor = info.Ball.Owner;
 
-			//	if (Goal.Other.GetDistance(possessor) > Distance.Create(1000))
-			//	{
-			//		var y = possessor.Position.Y < Goal.Other.Center.Y ? Game.Field.MinimumY : Game.Field.MinimumY;
-			//		var target = new Position(Goal.Other.X, y);
-			//		Dequeue(possessor.Apply(Actions.Shoot(target, 10f)));
-			//	}
+			var zoneBall = Game.Field[info.Ball.Position];
+			var zonesOwn = Game.Field.Select(info.OwnPlayers);
+			var zonesOther = Game.Field.Select(info.OtherPlayers);
+
+			zonesOwn.ExceptWith(zonesOther);
+
+			if (zonesOwn.Count > 0)
+			{
+				targets
+					.AddRange(zoneBall.GetTargets(zonesOther, zonesOther)
+					.OrderBy(z => z.DistanceToGoal));
+			}
+			if (targets.Count > 0)
+			{
+				var target = targets[0];
+				Dequeue(possessor.Apply(Actions.Shoot(target.Center, 7.5f)));
+
+				var pickup = Queue.OrderBy(p => Distance.Between(p, target)).FirstOrDefault();
+				Dequeue(pickup.Apply(Actions.Move(target)));
+			}
 			else
 			{
-				var possessor = info.Ball.Owner;
 				Dequeue(possessor.Apply(Actions.ShootOnGoal(10)));
 			}
-			//}
-			
 			return true;
 		}
 
@@ -89,7 +99,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 		protected bool CanPass(TurnInfo info)
 		{
-			
+
 			var possessor = info.Ball.Owner;
 			var candiate = Goal.Other.GetClosestBy(info.OwnPlayers);
 

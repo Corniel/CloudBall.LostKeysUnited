@@ -18,7 +18,7 @@ namespace CloudBall.Engines.LostKeysUnited
 
 			var roller = new RollingFileAppender();
 			roller.AppendToFile = true;
-			roller.File = @"LostKeysUnited_1.0.log";
+			roller.File = Bot.Location.FullName + ".log";
 			roller.Layout = patternLayout;
 			roller.MaxSizeRollBackups = 5;
 			roller.MaximumFileSize = "1GB";
@@ -26,8 +26,11 @@ namespace CloudBall.Engines.LostKeysUnited
 			roller.StaticLogFileName = true;
 			roller.ActivateOptions();
 			hierarchy.Root.AddAppender(roller);
-
-			hierarchy.Root.Level = Level.Info;
+#if DEBUG
+			hierarchy.Root.Level = Level.Debug;
+#else
+			hierarchy.Root.Level = Level.Error;
+#endif
 			hierarchy.Configured = true;
 		}
 	}

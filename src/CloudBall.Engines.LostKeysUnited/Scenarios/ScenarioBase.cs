@@ -46,9 +46,13 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			}
 
 			var closed = Goal.Other.GetClosestBy(Queue);
-			if (closed != null & Goal.Other.GetDistance(closed) > Distance.Create(500))
+			if (closed != null)
 			{
-				Dequeue(closed.Apply(Actions.Move(Goal.Other.Center)));
+				var distance = Goal.Other.GetDistance(closed);
+				if (distance > Distance.Create(400))
+				{
+					Dequeue(closed.Apply(Actions.Move(Goal.Other.Center - new Velocity(400, 0))));
+				}
 			}
 
 		}

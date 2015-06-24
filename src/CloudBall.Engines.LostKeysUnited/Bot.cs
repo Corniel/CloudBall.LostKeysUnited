@@ -67,7 +67,11 @@ namespace CloudBall.Engines.LostKeysUnited
 			}
 			catch (Exception x)
 			{
-				Log.Error("Action failed:", x);
+				Log.Error(Turns.GetErrorMessage(), x);
+			}
+			finally
+			{
+				Turns.Current.Finish();
 			}
 		}
 	}

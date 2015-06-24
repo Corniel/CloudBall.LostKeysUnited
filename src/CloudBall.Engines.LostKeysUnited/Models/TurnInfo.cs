@@ -11,9 +11,10 @@ namespace CloudBall.Engines.LostKeysUnited
 	{
 		public TurnInfo()
 		{
+			this.Stopwatch = Stopwatch.StartNew();
 			this.Players = new List<PlayerInfo>();
 		}
-
+		protected Stopwatch Stopwatch { get; set; }
 		public int Turn { get; set; }
 		public int OwnScore { get; set; }
 		public bool OwnTeamScored { get; set; }
@@ -26,6 +27,14 @@ namespace CloudBall.Engines.LostKeysUnited
 		public IEnumerable<PlayerInfo> OwnPlayers { get { return Players.Where(player => player.Team == TeamType.Own); } }
 		public IEnumerable<PlayerInfo> OtherPlayers { get { return Players.Where(player => player.Team == TeamType.Other); } }
 
+		public void Finish()
+		{
+			Stopwatch.Stop();
+		}
+
+		/// <summary>Get a message for the error logging.</summary>
+		public string GetErrorMessage() { return DebuggerDisplay; }
+
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay
 		{
@@ -33,12 +42,13 @@ namespace CloudBall.Engines.LostKeysUnited
 			{
 				return String.Format
 				(
-					"Turn: {0}, {1}{2}-{3}{4}",
+					"Turn: {0}, {1}{2}-{3}{4}, Duration: {5:0.000} millisecond",
 					this.Turn,
 					this.OwnScore,
 					this.OwnTeamScored ? "*" : "",
 					this.OtherScore,
-					this.OtherTeamScored ? "*" : ""
+					this.OtherTeamScored ? "*" : "",
+					this.Stopwatch.Elapsed.Seconds
 				);
 			}
 		}

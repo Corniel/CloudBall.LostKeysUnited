@@ -50,5 +50,8 @@ namespace CloudBall.Engines.LostKeysUnited
 			info.Ball = BallInfo.Create(ball, owner);
 			Add(info);
 		}
+
+		/// <summary>Get a message for the error logging.</summary>
+		public string GetErrorMessage() { return Current.GetErrorMessage(); }
 	}
 }

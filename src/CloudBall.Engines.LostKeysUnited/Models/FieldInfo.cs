@@ -45,7 +45,9 @@ namespace CloudBall.Engines.LostKeysUnited
 		{
 			get
 			{
-				return zones[ToDimension(point.X), ToDimension(point.Y)];
+				var x = Math.Max(ToDimension(point.X), ZonesX - 1);
+				var y = Math.Max(ToDimension(point.Y), ZonesY - 1);
+				return zones[x, y];
 			}
 		}
 		private int ToDimension(Single value) { return (int)(value / ZoneSize); }

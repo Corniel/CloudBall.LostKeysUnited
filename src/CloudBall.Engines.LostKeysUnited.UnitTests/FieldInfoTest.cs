@@ -26,7 +26,7 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 			Assert.AreEqual(658.9, act.Sum(zone => zone.Targets.Count) / (double)act.Count, 10, "Avg.Neighbors");
 		}
 
-		[Test]
+		[Test, Ignore]
 		public void Create_40_WriteData()
 		{
 			var act = FieldInfo.Create(new FieldInitSettings()

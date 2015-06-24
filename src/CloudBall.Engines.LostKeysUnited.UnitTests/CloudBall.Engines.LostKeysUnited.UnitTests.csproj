@@ -53,6 +53,8 @@
     <Compile Include="FieldInitSettingsTest.cs" />
     <Compile Include="GoalTest.cs" />
     <Compile Include="PlayerInfoTest.cs" />
+    <Compile Include="ShootSimulator.cs" />
+    <Compile Include="ShootSimulatorTest.cs" />
     <Compile Include="Stub.cs" />
     <Compile Include="VelocityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

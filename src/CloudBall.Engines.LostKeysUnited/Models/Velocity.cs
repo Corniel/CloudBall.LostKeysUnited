@@ -35,7 +35,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public Single Y { get { return y; } }
 
 		public Distance Speed { get { return Distance.Between(default(Position), new Position(X, Y)); } }
-		public Single Angle { get { return IsZero ? Single.NaN : Mathematics.Atan2(X, Y); } }
+		public Single Angle { get { return IsZero ? Single.NaN : Mathematics.Atan2(Y, X); } }
 
 		/// <summary>Gets the next velocity a ball has.</summary>
 		public Velocity NextBall { get { return new Velocity(X * BallInfo.Accelaration, Y *BallInfo.Accelaration); } }
@@ -49,14 +49,18 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <summary>Gets the normalized Velocity (speed = 1).</summary>
 		public Velocity Normalized { get { return new Velocity(X / Speed.Value, Y / Speed.Value); } }
 
-		/// <summary>Scales the velocity to the preferred length
-		/// 
-		/// </summary>
-		/// <param name="length"></param>
-		/// <returns></returns>
+		/// <summary>Scales the velocity to the preferred length.</summary>
 		public Velocity Scale(Single length)
 		{
 			return new Velocity(length * X / Speed.Value, length * Y / Speed.Value);
+		}
+
+		/// <summary>Rotates the vector.</summary>
+		public Velocity Rotate(Single theta)
+		{
+			var nX = Mathematics.Cos(theta) * X - Mathematics.Sin(theta) * Y;
+			var nY = Mathematics.Cos(theta) * Y - Mathematics.Sin(theta) * X;
+			return new Velocity(nX, nY);
 		}
 
 		#region Operations

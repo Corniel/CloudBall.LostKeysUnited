@@ -78,6 +78,11 @@ namespace CloudBall.Engines.LostKeysUnited
 			return set;
 		}
 
+		public PlayerInfo GetPlayer(FieldZone target, IEnumerable<PlayerInfo> players)
+		{
+			return players.FirstOrDefault(p => this[p] == target);
+		}
+
 		public Quadrant GetQuadrant(IPoint point)
 		{
 			var quadrant = Quadrant.None;
@@ -155,8 +160,8 @@ namespace CloudBall.Engines.LostKeysUnited
 			{
 				if (distance >= settings.MinimumPassDistance)
 				{
-					var sDis = source.DistanceToGoal.Value;
-					var tDis = target.DistanceToGoal.Value;
+					var sDis = source.DistanceToOtherGoal.Value;
+					var tDis = target.DistanceToOtherGoal.Value;
 					
 					if (sDis - tDis < settings.MaximumProgressLoss)
 					{

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	[BotName("Lost Keys United 4.0")]
+	[BotName("Lost Keys United 5.0")]
 	public class Bot : ITeam
 	{
 		/// <summary>Gets the location of the assembly of the bot.</summary>

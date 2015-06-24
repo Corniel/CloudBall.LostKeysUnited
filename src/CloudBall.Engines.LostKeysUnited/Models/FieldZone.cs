@@ -12,14 +12,21 @@ namespace CloudBall.Engines.LostKeysUnited
 		public FieldZone(int x, int y, Distance maximumShootDistance)
 		{
 			Center = new Position(x, y);
-			DistanceToGoal = Goal.Other.GetDistance(Center);
-			CheckShotOnGoal = DistanceToGoal < maximumShootDistance;
+			DistanceToOtherGoal = Goal.Other.GetDistance(Center);
+			DistanceToOwnGoal = Goal.Own.GetDistance(Center);
+
+			CanShotOnOtherGoal = DistanceToOtherGoal < maximumShootDistance;
+			CanShotOnOwnGoal = DistanceToOwnGoal < maximumShootDistance;
+			
+			
 			Targets = new Dictionary<IPoint, FieldPath>();
 		}
 
 		public Position Center { get; protected set; }
-		public Distance DistanceToGoal { get; protected set; }
-		public bool CheckShotOnGoal { get; protected set; }
+		public Distance DistanceToOtherGoal { get; protected set; }
+		public Distance DistanceToOwnGoal { get; protected set; }
+		public bool CanShotOnOtherGoal { get; protected set; }
+		public bool CanShotOnOwnGoal { get; protected set; }
 
 		public FieldZone[] Neighbors { get; internal set; }
 		public Dictionary<IPoint, FieldPath> Targets { get; private set; }
@@ -51,7 +58,7 @@ namespace CloudBall.Engines.LostKeysUnited
 			var sb = new StringBuilder();
 			sb.AppendFormat("Zone[{0:0}, {1:0}]", Center.X, Center.Y);
 
-			if (CheckShotOnGoal)
+			if (CanShotOnOtherGoal)
 			{
 				sb.Append(", GoalChance");
 			}

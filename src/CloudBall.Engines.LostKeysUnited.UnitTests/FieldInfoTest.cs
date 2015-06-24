@@ -21,7 +21,7 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 			});
 
 			Assert.AreEqual(5184, act.Count, "act.Count");
-			Assert.AreEqual(1822, act.Count(zone => zone.CheckShotOnGoal), "Count.CheckShotOnGoal");
+			Assert.AreEqual(1822, act.Count(zone => zone.CanShotOnOtherGoal), "Count.CheckShotOnGoal");
 			Assert.AreEqual(4.0, act.Sum(zone => zone.Neighbors.Length) / (double)act.Count, 0.1, "Avg.Neighbors");
 			Assert.AreEqual(658.9, act.Sum(zone => zone.Targets.Count) / (double)act.Count, 10, "Avg.Neighbors");
 		}
@@ -40,7 +40,7 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 				});
 
 			Assert.AreEqual(1296, act.Count, "act.Count");
-			Assert.AreEqual(448, act.Count(zone => zone.CheckShotOnGoal), "Count.CheckShotOnGoal");
+			Assert.AreEqual(448, act.Count(zone => zone.CanShotOnOtherGoal), "Count.CheckShotOnGoal");
 			Assert.AreEqual(3.88, act.Sum(zone => zone.Neighbors.Length) / (double)act.Count, 0.1, "Avg.Neighbors");
 			Assert.AreEqual(171.2, act.Sum(zone => zone.Targets.Count) / (double)act.Count, 10, "Avg.Neighbors");
 
@@ -60,7 +60,7 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 			});
 
 			Assert.AreEqual(144, act.Count, "act.Count");
-			Assert.AreEqual(52, act.Count(zone => zone.CheckShotOnGoal), "Count.CheckShotOnGoal");
+			Assert.AreEqual(52, act.Count(zone => zone.CanShotOnOtherGoal), "Count.CheckShotOnGoal");
 			Assert.AreEqual(3.65, act.Sum(zone => zone.Neighbors.Length) / (double)act.Count, 0.1, "Avg.Neighbors");
 			Assert.AreEqual(19.26, act.Sum(zone => zone.Targets.Count) / (double)act.Count, 10, "Avg.Neighbors");
 

@@ -53,9 +53,14 @@ namespace CloudBall.Engines.LostKeysUnited
 		internal Player Player { get; private set; }
 		public Position Position { get; private set; }
 		public Velocity Velocity { get; private set; }
-		public bool CanPickUpBall { get; private set; }
 		public Int32 FallenTimer { get; private set; }
 		public Int32 TackleTimer { get; private set; }
+
+		public bool CanPickUpBall { get; private set; }
+		public bool CanTackle(PlayerInfo attacker)
+		{
+			return Player.CanTackle(attacker.Player);
+		}
 
 		public PlayerInfo Apply(IAction action)
 		{

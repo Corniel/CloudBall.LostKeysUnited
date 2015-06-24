@@ -1,4 +1,5 @@
-﻿using CloudBall.Engines.LostKeysUnited.Roles;
+﻿using CloudBall.Engines.LostKeysUnited;
+using CloudBall.Engines.LostKeysUnited.Roles;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,8 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 				Role.PickUp,
 				Role.BallCatcher,
 				Role.Keeper,
+				Role.Sweeper,
+				Role.Attacker,
 			};
 		}
 
@@ -45,16 +48,27 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 				Dequeue(role.Apply(infos, Queue));
 			}
 
-			var closed = Goal.Other.GetClosestBy(Queue);
-			if (closed != null)
+			foreach (var player in Queue)
 			{
-				var distance = Goal.Other.GetDistance(closed);
-				if (distance > Distance.Create(400))
+				var source = Game.Field[player];
+
+				var own = new HashSet<FieldZone>(){ Game.Field[player] };
+				var other = new HashSet<FieldZone>();
+
+				foreach(var p in player.GetOther(infos.Current.Players))
 				{
-					Dequeue(closed.Apply(Actions.Move(Goal.Other.Center - new Velocity(400, 0))));
+					other.Add( Game.Field[p]);
+				}
+				var target = source
+					.GetTargets(own, other)
+					.OrderBy(z => Distance.Between(z, source))
+					.FirstOrDefault();
+
+				if (target != null)
+				{
+					Dequeue(player.Apply(Actions.Move(target)));
 				}
 			}
-
 		}
 	}
 }

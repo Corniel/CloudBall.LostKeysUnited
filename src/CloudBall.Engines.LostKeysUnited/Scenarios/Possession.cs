@@ -13,7 +13,9 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 		{
 			Roles = new IRole[]
 			{
-				Role.Keeper
+				Role.Keeper,
+				Role.Attacker,
+				Role.Sweeper,
 			};
 		}
 		protected override bool ApplyScenario(TurnInfos infos)
@@ -35,7 +37,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			{
 				targets
 					.AddRange(zoneBall.GetTargets(zonesOther, zonesOther)
-					.OrderBy(z => z.DistanceToGoal));
+					.OrderBy(z => z.DistanceToOtherGoal));
 			}
 			if (targets.Count > 0)
 			{

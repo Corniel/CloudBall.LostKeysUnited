@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_4.0</AssemblyName>
+    <AssemblyName>LostKeysUnited_5.0</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -80,10 +80,12 @@
     <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
+    <Compile Include="Roles\Attacker.cs" />
     <Compile Include="Roles\BallCatcher.cs" />
     <Compile Include="Roles\IRole.cs" />
     <Compile Include="Roles\Keeper.cs" />
     <Compile Include="Roles\PickUp.cs" />
+    <Compile Include="Roles\Sweeper.cs" />
     <Compile Include="Scenarios\IScenario.cs" />
     <Compile Include="Scenarios\Possession.cs" />
     <Compile Include="Scenario.cs" />

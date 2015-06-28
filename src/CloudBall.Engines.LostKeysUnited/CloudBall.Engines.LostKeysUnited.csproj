@@ -83,7 +83,6 @@
     <Compile Include="DistanceExtensions.cs" />
     <Compile Include="Guard.cs" />
     <Compile Include="Logging.cs" />
-    <Compile Include="Mathantics.cs" />
     <Compile Include="IPoint.cs">
       <SubType>Code</SubType>
     </Compile>

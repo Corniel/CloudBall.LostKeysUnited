@@ -15,8 +15,6 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests.Simulation
 			{
 				engine.Run();
 			}
-			Console.WriteLine("Sqrt.Count: {0}", Mathematics.SqrtCount);
-		
 		}
 	}
 }

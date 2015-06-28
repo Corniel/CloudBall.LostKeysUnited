@@ -220,7 +220,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		#region (Explicit) casting
 
 		/// <summary>Converts a (squared) distance to a double.</summary>
-		private Double ToDouble() { return Mathematics.Sqrt(m_Value); }
+		private Double ToDouble() { return Math.Sqrt(m_Value); }
 
 		/// <summary>Casts a distance to a System.String.</summary>
 		public static explicit operator string(Distance val) { return val.ToString(CultureInfo.CurrentCulture); }

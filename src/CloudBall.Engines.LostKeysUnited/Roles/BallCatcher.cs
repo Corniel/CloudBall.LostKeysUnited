@@ -1,21 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using CloudBall.Engines.LostKeysUnited.Models;
 using System.Linq;
 
 namespace CloudBall.Engines.LostKeysUnited.Roles
 {
 	public class BallCatcher : IRole
 	{
-		public PlayerInfo Apply(TurnInfos infos, IEnumerable<PlayerInfo> queue)
+		public bool Apply(GameState state, PlayerQueue queue)
 		{
-			var info = infos.Current;
-			if (info.Ball.IsOwn || info.OwnPlayers.Any(player => player.CanPickUpBall)) { return null; }
+			var ball = state.Current.Ball;
 
-			var kvp = infos.CatchUp.GetOwn().FirstOrDefault();
-			if (kvp.Key == null) { return null; }
+			if (ball.IsOwn || state.Current.OwnPlayers.Any(player => player.CanPickUpBall)) { return false; }
 
-			var catcher = kvp.Key;
-			var target = kvp.Value.Position;
-			return catcher.Apply(Actions.Move(target));
+			var catchUp = state.CatchUps.FirstOrDefault(c => queue.Contains(c.Player));
+
+			if (catchUp != null)
+			{
+				queue.Dequeue(Actions.Move(catchUp.Player, catchUp.Position));
+			}
+			return catchUp != null;
 		}
 	}
 }

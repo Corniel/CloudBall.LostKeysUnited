@@ -18,7 +18,7 @@ namespace CloudBall.Engines.LostKeysUnited
 
 			var roller = new RollingFileAppender();
 			roller.AppendToFile = true;
-			roller.File = Bot.Location.FullName + ".log";
+			roller.File = LostKeysUnited.Location.FullName + ".log";
 			roller.Layout = patternLayout;
 			roller.MaxSizeRollBackups = 5;
 			roller.MaximumFileSize = "1GB";

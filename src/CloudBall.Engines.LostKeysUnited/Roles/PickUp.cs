@@ -1,22 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using CloudBall.Engines.LostKeysUnited.Models;
 using System.Linq;
 
 namespace CloudBall.Engines.LostKeysUnited.Roles
 {
+	/// <summary>The player that can pick up the ball.</summary>
 	public class PickUp : IRole
 	{
-		public PlayerInfo Apply(TurnInfos infos, IEnumerable<PlayerInfo> queue)
+		public bool Apply(GameState state, PlayerQueue queue)
 		{
-			var info = infos.Current;
-			var pickup = info.OwnPlayers.FirstOrDefault(p => p.CanPickUpBall);
+			var current = state.Current;
+			if (current.Ball.IsOwn ||
+				// if the other can not pick it up, and it's a goal, just let it go.
+				(state.Path.End == BallPath.Ending.GoalOther &&
+				!state.CatchUps.Any(cu => cu.Player.Team == TeamType.Other)))
+			{
+				return false;
+			}
 
-			// If we cannot pick up, we can not...
-			if (pickup == null) { return null; }
-
-			// If we score and the other cannot pickup, we don't want to.
-			if (infos.BallPath.Ending == BallPath.End.GoalOwn && infos.CatchUp.Result == CatchUp.ResultType.Own) { return null; }
-
-			return pickup.Apply(Actions.PickUpBall);
+			var pickup = queue.FirstOrDefault(player => player.CanPickUpBall);
+			if (pickup != null)
+			{
+				queue.Dequeue(Actions.PickUpBall(pickup));
+			}
+			return pickup != null;
 		}
 	}
 }

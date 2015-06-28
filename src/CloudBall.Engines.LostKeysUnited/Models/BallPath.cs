@@ -1,144 +1,127 @@
-﻿using Common;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace CloudBall.Engines.LostKeysUnited
+namespace CloudBall.Engines.LostKeysUnited.Models
 {
-	public class BallPath : Dictionary<Int32, Position>
+	/// <summary>A path that describes the movement of the ball.</summary>
+	public class BallPath : List<Position>
 	{
-		public static readonly Single MaxPickUpDistance = Constants.BallMaxPickUpDistance * 0.9f;
+		/// <summary>Gets the acceleration of the ball (0.993025).</summary>
+		public const float Accelaration = 0.9930925f;
 
-		public enum End
+		/// <summary>The type to ending of the path.</summary>
+		public enum Ending
 		{
-			Unkown,
 			EndOfGame,
 			GoalOwn,
 			GoalOther
 		}
 
-		public Int32 Turn { get; protected set; }
-		public End Ending { get; protected set; }
+		/// <summary>The pickup timer of the ball.</summary>
+		public int PickUpTimer { get; set; }
 
-		public void Update(TurnInfo info)
+		/// <summary>The type of ending.</summary>
+		public Ending End { get; set; }
+
+		/// <summary>The type of ending.</summary>
+		public int Bounces { get; set; }
+
+		/// <summary>Gets the catch ups for the ball path.</summary>
+		public IEnumerable<CatchUp> GetCatchUps(IEnumerable<PlayerInfo> players)
 		{
-			Turn = info.Turn;
-			var ball = info.Ball;
-			var pos = ball.Position;
-			var vel = ball.Owner == null ? ball.Velocity : Velocity.Zero;
+			var queue = new Queue<PlayerInfo>(players);
 
-			this[info.Turn] = pos;
+			for (var turn = PickUpTimer; turn < Count; turn++)
+			{
+				if (queue.Count == 0) { break; }
+				for (var p = 0; p < queue.Count; p++)
+				{
+					var player = queue.Dequeue();
+					// the player can not run yet.
+					if (-player.FallenTimer > turn) { queue.Enqueue(player); continue; }
 
-			Update(pos, vel);
+					var distanceToBall = Distance.Between(this[turn], player.Position);
+					var playerReach = new Distance((turn + player.FallenTimer) * PlayerInfo.MaximumVelocity + BallInfo.MaximumPickUpDistance);
+
+					if (distanceToBall <= playerReach)
+					{
+						yield return new CatchUp()
+						{
+							Turn = turn,
+							Player = player,
+							Position = this[turn],
+						};
+					}
+					else
+					{
+						queue.Enqueue(player);
+					}
+				}
+			}
 		}
 
-		private void Update(Position pos, Velocity vel, int lastTurn = int.MaxValue)
+		/// <summary>Creates a path based on the position and the velocity of the ball.</summary>
+		public static BallPath Create(BallInfo ball, int maxLength)
 		{
-			// the ball rolls, we can calculate the path.
-			for (var turn = Turn + 1; turn <= Math.Min(Game.LastTurn, lastTurn); turn++)
-			{
-				pos = pos + vel;
-				vel = vel.NextBall;
+			return Create(ball.Position, ball.Velocity, ball.PickUpTimer, maxLength);
+		}
+		/// <summary>Creates a path based on the position and the velocity of the ball.</summary>
+		public static BallPath Create(Position ball, Velocity velocity, int pickUpTimer, int maxLength)
+		{
+			var path = new BallPath() { PickUpTimer = pickUpTimer };
 
+			var pos = ball;
+			var vel = velocity;
+			for (var turn = 0; turn < maxLength; turn++)
+			{
+				path.Add(pos);
+				pos += vel;
+				vel *= Accelaration;
 				var quadrant = Game.Field.GetQuadrant(pos);
 
 				if (quadrant.HasFlag(Quadrant.Left))
 				{
 					vel = vel.FlipHorizontal;
-					var prev = this[turn - 1];
+					var prev = turn == 0 ? ball : path[turn - 1];
 					if (prev.Y > Goal.MinimumY && pos.Y < Goal.MaximumY &&
 						prev.Y > Goal.MinimumY && pos.Y < Goal.MaximumY)
 					{
-						Ending = End.GoalOther;
-						return;
+						path.End = Ending.GoalOwn;
+						return path;
 					}
+					path.Bounces++;
 					var dX = Game.Field.MinimumX - pos.X;
 					pos = new Position(Game.Field.MinimumX + dX, pos.Y);
 				}
 				else if (quadrant.HasFlag(Quadrant.Right))
 				{
 					vel = vel.FlipHorizontal;
-					var prev = this[turn - 1];
+					var prev = turn == 0 ? ball : path[turn - 1];
 					if (prev.Y > Goal.MinimumY && pos.Y < Goal.MaximumY &&
 						prev.Y > Goal.MinimumY && pos.Y < Goal.MaximumY)
 					{
-						Ending = End.GoalOwn;
-						return;
+						path.End = Ending.GoalOther;
+						return path;
 					}
+					path.Bounces++;
 					var dX = Game.Field.MaximumX - pos.X;
 					pos = new Position(Game.Field.MaximumX + dX, pos.Y);
 				}
 				if (quadrant.HasFlag(Quadrant.Above))
 				{
+					path.Bounces++;
 					vel = vel.FlipVertical;
 					var dY = Game.Field.MinimumY - pos.Y;
 					pos = new Position(pos.X, Game.Field.MinimumY + dY);
 				}
 				else if (quadrant.HasFlag(Quadrant.Under))
 				{
+					path.Bounces++;
 					vel = vel.FlipVertical;
 					var dY = Game.Field.MaximumY - pos.Y;
 					pos = new Position(pos.X, Game.Field.MaximumY + dY);
 				}
-				this[turn] = pos;
 			}
-			Ending = End.EndOfGame;
-		}
-
-		/// <summary>Gets the turn and position of the moment the player catches up with the ball.</summary>
-		/// <remarks>
-		/// the difference should be smaller than the pick up tolerance:
-		/// 
-		/// d[ball] < d[player] + tolerance =>
-		/// 
-		/// d[ball]^2 < (d[player] + tolerance)^2
-		/// 
-		/// Test for the last, as it way faster than using Math.Sqrt().
-		/// </remarks>
-		public TurnPosition GetCatchUp(PlayerInfo player)
-		{
-			if (player.CanPickUpBall) { return new TurnPosition(Turn, player.Position); }
-
-			var passed = Turn + player.FallenTimer;
-
-			for (var turn = Turn + 1 + player.FallenTimer; turn <= Game.LastTurn; turn++)
-			{
-				Position ball;
-
-				if (TryGetValue(turn, out ball))
-				{
-					var distanceToBall = Distance.Between(player, ball);
-
-					var traveled = player.GetTraveled(turn - passed) + MaxPickUpDistance;
-
-					if (distanceToBall.Squared < traveled * traveled)
-					{
-						return new TurnPosition(turn, this[turn]);
-					}
-				}
-			}
-			return TurnPosition.Unknown;
-		}
-
-		public CatchUp GetCatchUp(IEnumerable<PlayerInfo> players)
-		{
-			var result = new CatchUp();
-
-			foreach (var player in players)
-			{
-				result[player] = GetCatchUp(player);
-			}
-			return result;
-		}
-
-		public static BallPath Create(Position ball, IPoint target, Single power, int turn, int lastTurn = int.MaxValue)
-		{
-			var path = new BallPath() { Turn = turn };
-			path[turn] = ball;
-
-			Velocity velocity = BallInfo.CreateVelocity(ball, target, power);
-
-			path.Update(ball, velocity, lastTurn);
-
 			return path;
 		}
 	}

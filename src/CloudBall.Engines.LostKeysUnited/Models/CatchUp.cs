@@ -1,47 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
-namespace CloudBall.Engines.LostKeysUnited
+namespace CloudBall.Engines.LostKeysUnited.Models
 {
-	public class CatchUp : Dictionary<PlayerInfo, TurnPosition>
+	[DebuggerDisplay("{DebuggerDisplay}")]
+	public class CatchUp
 	{
-		[Flags]
-		public enum ResultType
-		{
-			None = 0,
-			Own = 1,
-			Other = 2,
-			Both = Own | Other,
-		}
+		public int Turn { get; set; }
+		public PlayerInfo Player { get; set; }
+		public Position Position { get; set; }
 
-		public ResultType Result
+		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
+		private string DebuggerDisplay
 		{
 			get
 			{
-				if (Count == 0) { return ResultType.None; }
-
-				var own = this.Where(kvp => kvp.Key.Team == TeamType.Own).OrderBy(kvp => kvp.Value.Turn).FirstOrDefault();
-				var other = this.Where(kvp => kvp.Key.Team == TeamType.Other).OrderBy(kvp => kvp.Value.Turn).FirstOrDefault();
-
-				var tOwn = own.Key == null ? Int32.MaxValue : own.Value.Turn;
-				var tOther = other.Key == null ? Int32.MaxValue : other.Value.Turn;
-
-				if (tOwn == tOther) { return tOwn == Int32.MaxValue ? ResultType.None : ResultType.Both; }
-				return tOwn < tOther ? ResultType.Own : ResultType.Other;
-			}
-		}
-
-		public IEnumerable<KeyValuePair<PlayerInfo, TurnPosition>> GetOwn()
-		{
-			return this.Where(kvp => kvp.Key.Team == TeamType.Own && !kvp.Value.IsUnknown).OrderBy(kvp => kvp.Value.Turn);
-		}
-
-		public KeyValuePair<PlayerInfo, TurnPosition> Catcher
-		{
-			get
-			{
-				return this.OrderBy(kvp => kvp.Value.Turn).FirstOrDefault();
+				return String.Format
+				(
+					"Turn: {0}, Player: {1}, Team: {2}, Position: ({3:0}, {4:0})",
+					Turn,
+					Player.Number,
+					Player.Team,
+					Player.Position.X,
+					Player.Position.Y
+				);
 			}
 		}
 	}

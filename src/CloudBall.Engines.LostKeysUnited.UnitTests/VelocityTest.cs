@@ -16,5 +16,19 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 
 			Assert.AreEqual(exp.ToString(), act.ToString());
 		}
+
+		[Test]
+		public void GetAngle_TwoVectors_90Dgrees()
+		{
+			//var v0 = new Velocity(0, 13);
+			//var v1 = new Velocity(8, 0);
+
+			//var act = v0.GetAngle(v1);
+			//var exp = Mathematics.PI / 2f;
+
+			//Assert.AreEqual(exp, act);
+
+		}
+
 	}
 }

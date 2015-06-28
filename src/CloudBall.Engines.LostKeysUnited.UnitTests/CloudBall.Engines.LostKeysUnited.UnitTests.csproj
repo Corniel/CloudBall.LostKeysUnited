@@ -47,22 +47,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BallInfoTest.cs" />
-    <Compile Include="BallPathTest.cs" />
-    <Compile Include="FieldInfoTest.cs" />
-    <Compile Include="FieldInitSettingsTest.cs" />
-    <Compile Include="GoalTest.cs" />
-    <Compile Include="PlayerInfoTest.cs" />
-    <Compile Include="ShootSimulator.cs" />
-    <Compile Include="ShootSimulatorTest.cs" />
-    <Compile Include="Stub.cs" />
-    <Compile Include="VelocityTest.cs" />
+    <Compile Include="AngleTest.cs" />
+    <Compile Include="Models\BallInfoTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\BallPathTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DistanceTest.cs" />
+    <Compile Include="Models\FieldInfoTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\GoalTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\PlayerQueueTest.cs" />
+    <Compile Include="Models\PlayerInfoTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulation\GameSimulator.cs" />
+    <Compile Include="Simulation\ShootSimulator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Simulation\ShootSimulatorTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VelocityTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\CloudBall\src\CloudBall.Common\CloudBall.Common.csproj">
+      <Project>{21f7188f-6b18-4ef9-9193-df23ae75b60a}</Project>
+      <Name>CloudBall.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CloudBall\src\CloudBall.Engines.Dummy\CloudBall.Engines.Dummy.csproj">
+      <Project>{235d9fdf-7e97-4843-8be9-12fdcf59279f}</Project>
+      <Name>CloudBall.Engines.Dummy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CloudBall.Engines.LostKeysUnited\CloudBall.Engines.LostKeysUnited.csproj">
       <Project>{d0eefab9-a5be-4ca4-93fe-1575e1381978}</Project>
       <Name>CloudBall.Engines.LostKeysUnited</Name>

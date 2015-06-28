@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_5.0</AssemblyName>
+    <AssemblyName>LostKeysUnited_5.2</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,56 +44,123 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions.cs" />
-    <Compile Include="Actions\DropBall.cs" />
-    <Compile Include="Actions\Move.cs" />
-    <Compile Include="Actions\IAction.cs" />
-    <Compile Include="Actions\PickUpBall.cs" />
-    <Compile Include="Actions\Shoot.cs" />
-    <Compile Include="Actions\ShootOnGoal.cs" />
-    <Compile Include="Actions\Tackle.cs" />
-    <Compile Include="Actions\Wait.cs" />
-    <Compile Include="Bot.cs" />
+    <Compile Include="Actions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\DropBall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\IAction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\Move.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\NoAction.cs" />
+    <Compile Include="IActions\PickUpBall.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\Shoot.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\ShootOnGoal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\Tackle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IActions\Wait.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Angle.cs" />
+    <Compile Include="LostKeysUnited.cs" />
+    <Compile Include="Conversion\AngleTypeConverter.cs" />
+    <Compile Include="Conversion\DistanceTypeConverter.cs" />
+    <Compile Include="Distance.cs" />
+    <Compile Include="DistanceExtensions.cs" />
+    <Compile Include="Guard.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Mathantics.cs" />
-    <Compile Include="Models\Distance.cs" />
-    <Compile Include="Models\CatchUp.cs" />
-    <Compile Include="Models\FieldInfo.io.cs" />
-    <Compile Include="Models\FieldInitSettings.cs" />
-    <Compile Include="Models\FieldPath.cs" />
-    <Compile Include="Models\FieldZone.cs" />
-    <Compile Include="Models\IPoint.cs" />
-    <Compile Include="Models\BallInfo.cs" />
-    <Compile Include="Models\BallPath.cs" />
-    <Compile Include="Models\FieldInfo.cs" />
-    <Compile Include="Models\Quadrant.cs" />
-    <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\Goal.cs" />
-    <Compile Include="Models\PlayerInfo.cs" />
-    <Compile Include="Models\PlayerInfoExtensions.cs" />
-    <Compile Include="Actions\ShootOnOpenGoal.cs" />
-    <Compile Include="Models\TeamType.cs" />
-    <Compile Include="Models\TurnInfo.cs" />
-    <Compile Include="Models\TurnInfos.cs" />
-    <Compile Include="Models\Position.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="Roles\Attacker.cs" />
-    <Compile Include="Roles\BallCatcher.cs" />
-    <Compile Include="Roles\IRole.cs" />
-    <Compile Include="Roles\Keeper.cs" />
-    <Compile Include="Roles\PickUp.cs" />
-    <Compile Include="Roles\Sweeper.cs" />
-    <Compile Include="Scenarios\IScenario.cs" />
-    <Compile Include="Scenarios\Possession.cs" />
-    <Compile Include="Scenario.cs" />
-    <Compile Include="Scenarios\ScenarioBase.cs" />
+    <Compile Include="IPoint.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\BallInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\BallPath.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\CatchUp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\FieldInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Game.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Goal.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\PlayerInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\PlayerInfoExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\PlayerQueue.cs" />
+    <Compile Include="Models\Zone.cs" />
+    <Compile Include="Models\Zones.cs" />
+    <Compile Include="Position.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Quadrant.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\TeamType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\TurnInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\GameState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Power.cs" />
+    <Compile Include="Role.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Roles\Attacker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Roles\BallCatcher.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Roles\BallOwner.cs" />
+    <Compile Include="Roles\IRole.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Roles\Keeper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Roles\PickUp.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Roles\Sweeper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Scenario.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Scenarios\Default.cs" />
-    <Compile Include="Models\TurnPosition.cs" />
-    <Compile Include="Models\Velocity.cs" />
-    <Compile Include="Serialization\FieldSerializationInfo.cs" />
+    <Compile Include="Velocity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayerMapping.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

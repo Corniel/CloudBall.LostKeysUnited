@@ -1,24 +1,24 @@
-﻿using Common;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace CloudBall.Engines.LostKeysUnited
+namespace CloudBall.Engines.LostKeysUnited.Models
 {
 	/// <summary>The game has two goals. One for red, and one for blue.</summary>
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class Goal
 	{
 		/// <summary>Gets the own goal [(0, 383); (0, 695)].</summary>
-		public static readonly Goal Own = new Goal(TeamType.Own, Field.MyGoal.Top, Field.MyGoal.Center, Field.MyGoal.Bottom);
+		public static readonly Goal Own = new Goal(TeamType.Own, Common.Field.MyGoal.Top, Common.Field.MyGoal.Center, Common.Field.MyGoal.Bottom);
 
 		/// <summary>Gets the goal of the other [(1920, 383); (1920, 695)].</summary>
-		public static readonly Goal Other = new Goal(TeamType.Other, Field.EnemyGoal.Top, Field.EnemyGoal.Center, Field.EnemyGoal.Bottom);
+		public static readonly Goal Other = new Goal(TeamType.Other, Common.Field.EnemyGoal.Top, Common.Field.EnemyGoal.Center, Common.Field.EnemyGoal.Bottom);
 
-		internal static readonly Single MinimumY = Field.MyGoal.Top.Y;
-		internal static readonly Single MaximumY = Field.MyGoal.Bottom.Y;
+		internal static readonly Single MinimumY = Common.Field.MyGoal.Top.Y;
+		internal static readonly Single MaximumY = Common.Field.MyGoal.Bottom.Y;
 
 		private Goal() { }
 		private Goal(TeamType team, Position top, Position center, Position bottom)
@@ -51,7 +51,7 @@ namespace CloudBall.Engines.LostKeysUnited
 			// between Top and bottom
 			else if (other.Y < MaximumY)
 			{
-				return Distance.Create(X - other.X);
+				return new Distance(X - other.X);
 			}
 			return Distance.Between(goal, other);
 		}

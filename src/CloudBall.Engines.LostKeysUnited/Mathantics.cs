@@ -1,14 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	/// <summary>Mapper to Math, using singles instead of doubles.</summary>
+	/// <summary>Gate to System.Math, using singles instead of doubles.</summary>
 	public static class Mathematics
 	{
-		public static Single Abs(Single distance) { return (Single)Math.Abs(distance); }
-		public static Single Sqrt(Single value) { return (Single)Math.Sqrt(value); }
-		public static Single Cos(Single value) { return (Single)Math.Cos(value); }
-		public static Single Sin(Single value) { return (Single)Math.Sin(value); }
-		public static Single Atan2(Single x, Single y) { return (Single)Math.Atan2(x, y); }
+		public static readonly Single PI = (Single)Math.PI;
+
+		public static Single Sqrt(double value)
+		{
+			return (Single)Math.Sqrt(value);
+			//int key = (int)(10d * value + 4.99);
+			//float sq;
+			//if (!sqrt.TryGetValue(key, out sq))
+			//{
+			//	sq = (float)Math.Sqrt(key);
+			//	sqrt[key] = sq;
+			//}
+			//return sq;
+		}
+		private static Dictionary<int, float> sqrt = new Dictionary<int, float>();
+		public static int SqrtCount { get { return sqrt.Count; } }
 	}
 }

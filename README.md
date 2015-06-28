@@ -3,8 +3,13 @@ Lost Keys United
 Lost Keys United is a AI that can play Cloud Ball. It's a fresh start after
 creating "De Wolkenhondjes" for the original challenge of Giraff.
 
-Version 4.0
+Version 5.2
 -----------
+Made the internal model total indepedent of the original Cloud Ball model. Remove
+the pre-comuputed passing stuff.
+
+Version 4.0 (Insteable)
+-----------------------
 Elementary (pre-computed) passing added. The field is split into zones, how to
 get there, and which zones, should not be occupied by any opponent.
 
@@ -13,7 +18,7 @@ Version 3.1 (Elo 1650)
 Changed to two scenarios: Possession and default. Implemented a very basic
 way of passing, and one player that tries to get close to the goal.
 
-Version 2.0 (Elo 1600)
+Version 2.0 (Elo 1500)
 ----------------------
 Introduced roles (like keeper) on top of scenario's (on the ball, pick up the
 ball, ect.). Implemented only the keeper role for now.

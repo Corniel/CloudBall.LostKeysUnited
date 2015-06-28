@@ -1,72 +1,69 @@
-﻿using Common;
+﻿
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
-namespace CloudBall.Engines.LostKeysUnited
+namespace CloudBall.Engines.LostKeysUnited.Models
 {
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class PlayerInfo : IPoint
 	{
-		public const Single MaximumVelocity = 3;
+		public const float MaximumVelocity = 3;
 		public const Single AccelerationFactor = 0.071773462f;
 		public const Single SlowDownFactor = 0.93303299f;
 
-		public PlayerInfo(
-			int number,
-			TeamType team,
-			Position pos,
-			Velocity vel,
-			bool canpickupball,
-			Player player,
-			int fallentimer = 0,
-			int tackletimer = 0)
+		public PlayerInfo()
 		{
-			Id = number | ((Int32)team << 3);
-			Position = pos;
-			Velocity = vel;
-			CanPickUpBall = canpickupball;
-			Player = player;
-			FallenTimer = fallentimer;
-			TackleTimer = tackletimer;
+			this.CanBetTackled = new List<int>();
 		}
 
-		public static PlayerInfo Create(Player player, Ball ball, TeamType team)
+		public static PlayerInfo Create(Common.Player player, Common.Ball ball, TeamType team, IEnumerable<Common.Player> other)
 		{
-			if (player == null) { throw new ArgumentNullException("player"); }
+			Guard.NotNull(player, "player");
+			Guard.NotNull(ball, "ball");
 
-			var number = (Int32)player.PlayerType;
-			return new PlayerInfo(
-				number,
-				team,
-				player.Position,
-				player.Velocity,
-				player.CanPickUpBall(ball),
-				player,
-				player.FallenTimer,
-				player.TackleTimer);
+			var info = new PlayerInfo()
+			{
+				Id = PlayerMapping.GetId(player.PlayerType, team),
+				Position = player.Position,
+				Velocity = player.Velocity,
+				IsBallOwner = player == ball.Owner,
+				CanPickUpBall = player.CanPickUpBall(ball),
+				CanBetTackled = other.Select(p => PlayerMapping
+					.GetId(p.PlayerType, team == TeamType.Other ? TeamType.Own: TeamType.Other)).ToList(),
+				FallenTimer = player.FallenTimer,
+				TackleTimer = player.TackleTimer,
+			};
+			return info;
 		}
-		public Int32 Id { get; private set; }
+		public int Id { get; set; }
 		public TeamType Team { get { return (TeamType)(Id >> 3); } }
-		public PlayerType Number { get { return (PlayerType)(Id & 7); } }
+		public int Number { get { return Id & 7; } }
 
-		internal Player Player { get; private set; }
-		public Position Position { get; private set; }
-		public Velocity Velocity { get; private set; }
-		public Int32 FallenTimer { get; private set; }
-		public Int32 TackleTimer { get; private set; }
+		public Position Position { get; set; }
+		public Velocity Velocity { get;  set; }
+		/// <summary>The fallen timer indicates how long it will take before a player
+		/// can move again.
+		/// </summary>
+		/// <remarks>
+		/// A negative value indicates that a player can not move.
+		/// </remarks>
+		public int FallenTimer { get;  set; }
+		public int TackleTimer { get;  set; }
 
-		public bool CanPickUpBall { get; private set; }
-		public bool CanTackle(PlayerInfo attacker)
+		/// <summary>Returns true if the player can move.</summary>
+		public bool CanMove { get { return FallenTimer == 0; } }
+
+		public bool CanPickUpBall { get; set; }
+		public bool IsBallOwner { get; set; }
+		
+		public bool CanTackle(PlayerInfo other)
 		{
-			return Player.CanTackle(attacker.Player);
+			return CanBetTackled.Contains(other.Id);
 		}
-
-		public PlayerInfo Apply(IAction action)
-		{
-			action.Invoke(this); 
-			return this;
-		}
+		public List<int> CanBetTackled { get; set; }
 
 		public Velocity GetVelocity(IPoint destination)
 		{
@@ -76,18 +73,6 @@ namespace CloudBall.Engines.LostKeysUnited
 			return (Velocity + direction) * SlowDownFactor;
 		}
 
-		public Single GetTraveled(Int32 turns)
-		{
-			return GetTraveled(Velocity, turns);
-		}
-
-		public static Single GetTraveled(Velocity velocity, Int32 turns)
-		{
-			var speed = (int)(0.5 + velocity.Speed.Squared * 10);
-			return traveled[speed, turns];
-		}
-		private static readonly Single[,] traveled;
-
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay
 		{
@@ -95,12 +80,15 @@ namespace CloudBall.Engines.LostKeysUnited
 			{
 				return String.Format
 				(
-					"Team {0} [{1}], Pos: ({2:0.0}, {3:0.0}), Speed: {4:0.0}, Angle: {5:0}",
+					"Team {0} [{1}], Pos: ({2:0.0}, {3:0.0}), Speed: {4:0.0}, Fallen: {5}, Tackle: {6}{7}{8}",
 					Team,
 					(int)Number,
 					Position.X, Position.Y,
-					Velocity.Speed.Value,
-					Velocity.Angle
+					(float)Velocity.Speed,
+					FallenTimer,
+					TackleTimer,
+					IsBallOwner ? ", IsBallOwner" : "",
+					CanPickUpBall ? ", CanPickupBall" : ""
 				);
 			}
 		}
@@ -113,23 +101,5 @@ namespace CloudBall.Engines.LostKeysUnited
 		Single IPoint.Y { get { return Position.Y; } }
 
 		#endregion
-
-		static PlayerInfo()
-		{
-			// the diagonal = 2203 so the maximum time is 735.
-			traveled = new Single[128, 1024];
-
-			for (var speed = 0; speed <= 90; speed++)
-			{
-				var spe = Mathematics.Sqrt(speed / 10f);
-				var dis = 0f;
-				for (var turn = 0; turn < 1024; turn++)
-				{
-					traveled[speed, turn] = dis;
-					spe = (spe + 1 * MaximumVelocity * AccelerationFactor) * SlowDownFactor;
-					dis += spe;
-				}
-			}
-		}
 	}
 }

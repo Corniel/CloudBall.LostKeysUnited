@@ -14,12 +14,12 @@ namespace CloudBall
 		{
 			var teams = new List<ITeam>()
 			{
-				new CloudBall.Engines.LostKeysUnited.Bot(),
+				new CloudBall.Engines.LostKeysUnited.LostKeysUnited(),
 				//TeamFactory.Load(@"*\Arena\Engines\Wolkenhondjes_6.1.dll"),
 				new SimpleStart(),
 			};
 
-			using (Client.Client client = new Client.Client(teams[0], teams[1]))
+			using (Client.Client client = new Client.Client(teams[0], teams[2]))
 			{
 				client.Run();
 			}

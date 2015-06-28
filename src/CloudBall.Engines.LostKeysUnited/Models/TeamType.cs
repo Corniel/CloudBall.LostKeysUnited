@@ -1,4 +1,4 @@
-﻿namespace CloudBall.Engines.LostKeysUnited
+﻿namespace CloudBall.Engines.LostKeysUnited.Models
 {
 	public enum TeamType
 	{

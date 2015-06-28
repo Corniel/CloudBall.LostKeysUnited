@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudBall.Engines.LostKeysUnited.Models;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -35,6 +36,8 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <summary>Get a message for the error logging.</summary>
 		public string GetErrorMessage() { return DebuggerDisplay; }
 
+		public override string ToString() { return DebuggerDisplay; }
+
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay
 		{
@@ -48,7 +51,7 @@ namespace CloudBall.Engines.LostKeysUnited
 					this.OwnTeamScored ? "*" : "",
 					this.OtherScore,
 					this.OtherTeamScored ? "*" : "",
-					this.Stopwatch.Elapsed.Seconds
+					this.Stopwatch.Elapsed.TotalMilliseconds
 				);
 			}
 		}

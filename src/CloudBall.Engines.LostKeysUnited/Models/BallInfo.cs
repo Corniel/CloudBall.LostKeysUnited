@@ -1,30 +1,27 @@
-﻿using Common;
+﻿
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
-namespace CloudBall.Engines.LostKeysUnited
+namespace CloudBall.Engines.LostKeysUnited.Models
 {
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class BallInfo : IPoint
 	{
-		public const Single PowerToSpeed = 1.2f;
-		public const Single Accelaration = 0.9930925f;
+		public const float MaximumPickUpDistance = 40;
 
-		public BallInfo(Position pos, Velocity vel, int pickuptimer, Ball ball, PlayerInfo owner)
+		public BallInfo(Position pos, Velocity vel, int pickuptimer, PlayerInfo owner)
 		{
 			Position = pos;
 			Velocity = vel;
 			PickUpTimer = pickuptimer;
-			Ball = ball;
 			Owner = owner;
 		}
 
-		public Ball Ball { get; private set; }
 		public PlayerInfo Owner { get; private set; }
 		public Position Position { get; private set; }
 		public Velocity Velocity { get; private set; }
-		public Int32 PickUpTimer { get; private set; }
+		public int PickUpTimer { get; private set; }
 
 		public TeamType Team { get { return Owner == null ? TeamType.None : Owner.Team; } }
 		public bool IsOwn { get { return Team == TeamType.Own; } }
@@ -40,7 +37,7 @@ namespace CloudBall.Engines.LostKeysUnited
 				(
 					"Ball, Pos: ({0:0.0}, {1:0.0}), Speed: {2:0.0}, Angle: {3:0}, Owner: {3}",
 					Position.X, Position.Y,
-					Velocity.Speed.Value,
+					Velocity.Speed,
 					Velocity.Angle,
 					Team
 				);
@@ -56,15 +53,10 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		#endregion
 
-		public static BallInfo Create(Ball ball, PlayerInfo owner)
+		public static BallInfo Create(Common.Ball ball, PlayerInfo owner)
 		{
-			if (ball == null) { throw new ArgumentNullException("player"); }
-			return new BallInfo(ball.Position, ball.Velocity, ball.PickUpTimer, ball, owner);
-		}
-
-		public static Velocity CreateVelocity(IPoint ball, IPoint target, float power)
-		{
-			return new Velocity(target.X - ball.X, target.Y - ball.Y).Scale(power * PowerToSpeed);
+			Guard.NotNull(ball, "ball");
+			return new BallInfo(ball.Position, ball.Velocity, ball.PickUpTimer, owner);
 		}
 	}
 }

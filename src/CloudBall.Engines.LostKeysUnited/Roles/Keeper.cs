@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudBall.Engines.LostKeysUnited.Models;
+using System;
 using System.Collections.Generic;
 
 namespace CloudBall.Engines.LostKeysUnited.Roles
@@ -6,50 +7,20 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 	/// <summary>The keeper is the last man standing, he will not leave his goal that easy.</summary>
 	public class Keeper : IRole
 	{
-		public const Single MaximumDistanceFromGoal = 200f;
-		public const Single MinimumDistanceFromBall = 60f;
+		public const Single MaximumDistanceFromGoal = 210f;
 
-		public PlayerInfo Apply(TurnInfos infos, IEnumerable<PlayerInfo> queue)
+		public bool Apply(GameState state, PlayerQueue queue)
 		{
 			var keeper = Goal.Own.GetClosestBy(queue);
+			var ball = state.Current.Ball;
 
-			var catcher = infos.CatchUp.Catcher;
-			var ball = catcher.Key == null ? infos.Current.Ball.Position : catcher.Value.Position;
-
-			var velocity = GetHalfwayVelocity(ball);
-
-			var length = velocity.Speed.Value;
-
-			var distance = Math.Max(MinimumDistanceFromBall, length - MaximumDistanceFromGoal);
-
-			if (distance < 2 * MinimumDistanceFromBall)
+			if (keeper != null)
 			{
-				return keeper.Apply(Actions.Move(ball));
+				var velo = (ball.Position - keeper.Position).Scale(MaximumDistanceFromGoal);
+				var target = Goal.Own.Center + velo;
+				queue.Dequeue(Actions.Move(keeper, target));
 			}
-			velocity = velocity.Scale(distance);
-			var target = ball + velocity;
-			return keeper.Apply(Actions.Move(target));
-		}
-
-		public static Velocity GetHalfwayVelocity(Position ball)
-		{
-			var vectorTop = (ball - Goal.Own.Top);
-			var vectorBot = (ball - Goal.Own.Bottom);
-
-			// make of equal length.
-			if (vectorTop.Speed > vectorBot.Speed)
-			{
-				vectorTop.Scale(vectorBot.Speed.Value);
-			}
-			else
-			{
-				vectorBot.Scale(vectorTop.Speed.Value);
-			}
-
-			// Get the point halfway.
-			var halfway = (vectorTop - vectorBot) * 0.5f;
-			var target = ball -(vectorTop - halfway);
-			return target - ball;
+			return keeper != null;
 		}
 	}
 }

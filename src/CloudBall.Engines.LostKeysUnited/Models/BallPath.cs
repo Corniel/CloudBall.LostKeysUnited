@@ -77,9 +77,8 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				path.Add(pos);
 				pos += vel;
 				vel *= Accelaration;
-				var quadrant = Game.Field.GetQuadrant(pos);
 
-				if (quadrant.HasFlag(Quadrant.Left))
+				if (Game.Field.IsLeft(pos))
 				{
 					vel = vel.FlipHorizontal;
 					var prev = turn == 0 ? ball : path[turn - 1];
@@ -93,7 +92,7 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 					var dX = Game.Field.MinimumX - pos.X;
 					pos = new Position(Game.Field.MinimumX + dX, pos.Y);
 				}
-				else if (quadrant.HasFlag(Quadrant.Right))
+				else if (Game.Field.IsRight(pos))
 				{
 					vel = vel.FlipHorizontal;
 					var prev = turn == 0 ? ball : path[turn - 1];
@@ -107,14 +106,14 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 					var dX = Game.Field.MaximumX - pos.X;
 					pos = new Position(Game.Field.MaximumX + dX, pos.Y);
 				}
-				if (quadrant.HasFlag(Quadrant.Above))
+				if (Game.Field.IsAbove(pos))
 				{
 					path.Bounces++;
 					vel = vel.FlipVertical;
 					var dY = Game.Field.MinimumY - pos.Y;
 					pos = new Position(pos.X, Game.Field.MinimumY + dY);
 				}
-				else if (quadrant.HasFlag(Quadrant.Under))
+				if (Game.Field.IsUnder(pos))
 				{
 					path.Bounces++;
 					vel = vel.FlipVertical;

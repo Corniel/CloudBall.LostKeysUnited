@@ -117,9 +117,6 @@
     <Compile Include="Position.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\Quadrant.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Models\TeamType.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -13,6 +13,8 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			{
 				Role.BallOwner,
 				Role.PickUp,
+				Role.Tackler,
+				Role.Sweeper,
 				Role.BallCatcher,
 				Role.Keeper,
 			};

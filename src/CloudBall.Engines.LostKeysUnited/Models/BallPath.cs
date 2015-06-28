@@ -32,36 +32,7 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 		/// <summary>Gets the catch ups for the ball path.</summary>
 		public IEnumerable<CatchUp> GetCatchUps(IEnumerable<PlayerInfo> players)
 		{
-			var queue = new Queue<PlayerInfo>(players);
-
-			for (var turn = PickUpTimer; turn < Count; turn++)
-			{
-				if (queue.Count == 0) { break; }
-				for (var p = 0; p < queue.Count; p++)
-				{
-					var player = queue.Dequeue();
-					// the player can not run yet.
-					if (-player.FallenTimer > turn) { queue.Enqueue(player); continue; }
-
-					var distanceToBall = Distance.Between(this[turn], player.Position);
-					var speed = PlayerPath.GetInitialSpeed(player, this[turn]);
-					var playerReach = PlayerPath.GetDistance(speed, turn + player.FallenTimer, 40);
-
-					if (distanceToBall <= playerReach)
-					{
-						yield return new CatchUp()
-						{
-							Turn = turn,
-							Player = player,
-							Position = this[turn],
-						};
-					}
-					else
-					{
-						queue.Enqueue(player);
-					}
-				}
-			}
+			return CatchUp.GetCatchUps(this, PickUpTimer, players);
 		}
 
 		/// <summary>Creates a path based on the position and the velocity of the ball.</summary>

@@ -20,6 +20,11 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			Guard.NotNull(player, "player");
 			Guard.NotNull(ball, "ball");
 
+			var tackled = other.Where(o => player.CanTackle(o)).ToList();
+			if (tackled.Count > 0)
+			{
+			}
+
 			var info = new PlayerInfo()
 			{
 				Id = PlayerMapping.GetId(player.PlayerType, team),
@@ -27,8 +32,7 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				Velocity = player.Velocity,
 				IsBallOwner = player == ball.Owner,
 				CanPickUpBall = player.CanPickUpBall(ball),
-				CanBetTackled = other.Select(p => PlayerMapping
-					.GetId(p.PlayerType, team == TeamType.Other ? TeamType.Own: TeamType.Other)).ToList(),
+				CanBetTackled = tackled.Select(p => PlayerMapping.GetId(p.PlayerType, TeamType.Other)).ToList(),
 				FallenTimer = player.FallenTimer,
 				TackleTimer = player.TackleTimer,
 			};

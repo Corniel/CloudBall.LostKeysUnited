@@ -55,6 +55,12 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			return (velocity + direction) * SlowDownFactor;
 		}
 
+		/// <summary>Gets the catch ups for the ball path.</summary>
+		public IEnumerable<CatchUp> GetCatchUps(IEnumerable<PlayerInfo> players)
+		{
+			return CatchUp.GetCatchUps(this, 0, players);
+		}
+
 		/// <summary>Creates a player path.</summary>
 		public static PlayerPath Create(PlayerInfo player, IPoint target, int maxLength, Distance tolerance)
 		{

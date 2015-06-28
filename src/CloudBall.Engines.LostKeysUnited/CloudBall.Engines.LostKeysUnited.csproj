@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_5.2</AssemblyName>
+    <AssemblyName>LostKeysUnited_5.3</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,6 +63,7 @@
     <Compile Include="IActions\PickUpBall.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="IActions\PotentialAction.cs" />
     <Compile Include="IActions\Shoot.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,9 +131,6 @@
     <Compile Include="Role.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Roles\Attacker.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Roles\BallCatcher.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -146,9 +144,8 @@
     <Compile Include="Roles\PickUp.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Roles\Sweeper.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Roles\Sweeper.cs" />
+    <Compile Include="Roles\Tackler.cs" />
     <Compile Include="Scenario.cs">
       <SubType>Code</SubType>
     </Compile>

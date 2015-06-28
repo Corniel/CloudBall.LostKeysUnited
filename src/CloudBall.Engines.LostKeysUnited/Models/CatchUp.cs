@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -27,5 +28,41 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				);
 			}
 		}
+
+		/// <summary>Gets the catch ups for the path.</summary>
+		public static IEnumerable<CatchUp> GetCatchUps(List<Position> path, int pickUpTimer, IEnumerable<PlayerInfo> players)
+		{
+			var queue = new Queue<PlayerInfo>(players);
+
+			for (var turn = pickUpTimer; turn < path.Count; turn++)
+			{
+				if (queue.Count == 0) { break; }
+				for (var p = 0; p < queue.Count; p++)
+				{
+					var player = queue.Dequeue();
+					// the player can not run yet.
+					if (-player.FallenTimer > turn) { queue.Enqueue(player); continue; }
+
+					var distanceToBall = Distance.Between(path[turn], player.Position);
+					var speed = PlayerPath.GetInitialSpeed(player, path[turn]);
+					var playerReach = PlayerPath.GetDistance(speed, turn + player.FallenTimer, 40);
+
+					if (distanceToBall <= playerReach)
+					{
+						yield return new CatchUp()
+						{
+							Turn = turn,
+							Player = player,
+							Position = path[turn],
+						};
+					}
+					else
+					{
+						queue.Enqueue(player);
+					}
+				}
+			}
+		}
+
 	}
 }

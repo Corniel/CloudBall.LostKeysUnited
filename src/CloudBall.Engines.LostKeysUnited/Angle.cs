@@ -38,6 +38,9 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		#region Operations
 
+		/// <summary>Gets the absolute value of the angle.</summary>
+		public Angle Abs() { return Math.Abs(m_Value); }
+
 		/// <summary>Returns the sine of the angle.</summary>
 		public double Sin() { return Math.Sin(m_Value); }
 		
@@ -375,5 +378,5 @@ namespace CloudBall.Engines.LostKeysUnited
 		}
 
 		#endregion
-	 }
+	}
 }

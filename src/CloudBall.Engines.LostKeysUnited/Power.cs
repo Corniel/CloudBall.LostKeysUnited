@@ -23,6 +23,10 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		#endregion
 
+		/// <summary>Multiplies the power.</summary>
+		public Power Multiply(float factor) { return m_Value * factor; }
+		public static Power operator *(Power power, float factor) { return power.Multiply(factor); }
+
 		#region (Explicit) casting
 
 		/// <summary>Casts a double to power.</summary>
@@ -31,7 +35,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public static explicit operator float(Power val) { return val.m_Value; }
 
 		#endregion
-
+				
 		public Velocity ToVelocity(IPoint ball, IPoint target)
 		{
 			Velocity velocity = new Velocity(ball.X - target.X,ball.Y - target.Y);

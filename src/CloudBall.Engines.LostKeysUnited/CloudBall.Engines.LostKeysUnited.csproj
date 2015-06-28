@@ -110,6 +110,7 @@
     <Compile Include="Models\PlayerInfoExtensions.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\PlayerPath.cs" />
     <Compile Include="Models\PlayerQueue.cs" />
     <Compile Include="Models\Zone.cs" />
     <Compile Include="Models\Zones.cs" />

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using CloudBall.Engines.LostKeysUnited.Conversion;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
-using CloudBall.Engines.LostKeysUnited.Conversion;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
@@ -24,6 +23,12 @@ namespace CloudBall.Engines.LostKeysUnited
 	{
 		/// <summary>Represents an empty/not set distance.</summary>
 		public static readonly Distance Zero = default(Distance);
+
+		/// <summary>Gets the pickup distance.</summary>
+		public static readonly Distance Pickup = new Distance(40);
+
+		/// <summary>Gets the tackle distance.</summary>
+		public static readonly Distance Tackle = new Distance(50);
 
 		/// <summary>Creates the distance/speed/length for a velocity.</summary>
 		public Distance(Velocity velocity) { m_Value = velocity.X * velocity.X + velocity.Y * velocity.Y; }

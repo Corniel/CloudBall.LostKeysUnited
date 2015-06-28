@@ -10,10 +10,6 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public class PlayerInfo : IPoint
 	{
-		public const float MaximumVelocity = 3;
-		public const Single AccelerationFactor = 0.071773462f;
-		public const Single SlowDownFactor = 0.93303299f;
-
 		public PlayerInfo()
 		{
 			this.CanBetTackled = new List<int>();
@@ -64,14 +60,6 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			return CanBetTackled.Contains(other.Id);
 		}
 		public List<int> CanBetTackled { get; set; }
-
-		public Velocity GetVelocity(IPoint destination)
-		{
-			var dX = Position.X - destination.X;
-			var dY = Position.Y - destination.Y;
-			var direction = new Velocity(dX, dY).Normalized * (MaximumVelocity * AccelerationFactor);
-			return (Velocity + direction) * SlowDownFactor;
-		}
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay

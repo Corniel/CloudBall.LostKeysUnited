@@ -62,7 +62,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\PlayerQueueTest.cs" />
-    <Compile Include="Models\PlayerInfoTest.cs">
+    <Compile Include="Models\PlayerPathTest.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

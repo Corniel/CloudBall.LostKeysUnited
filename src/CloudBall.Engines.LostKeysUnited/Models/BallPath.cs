@@ -26,6 +26,9 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 		/// <summary>The type of ending.</summary>
 		public int Bounces { get; set; }
 
+		/// <summary>Gets the effective distance.</summary>
+		public Distance Distance { get { return Count < 2 ? Distance.Zero : Distance.Between(this[0], this[Count - 1]); } }
+
 		/// <summary>Gets the catch ups for the ball path.</summary>
 		public IEnumerable<CatchUp> GetCatchUps(IEnumerable<PlayerInfo> players)
 		{
@@ -41,7 +44,8 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 					if (-player.FallenTimer > turn) { queue.Enqueue(player); continue; }
 
 					var distanceToBall = Distance.Between(this[turn], player.Position);
-					var playerReach = new Distance((turn + player.FallenTimer) * PlayerInfo.MaximumVelocity + BallInfo.MaximumPickUpDistance);
+					var speed = PlayerPath.GetInitialSpeed(player, this[turn]);
+					var playerReach = PlayerPath.GetDistance(speed, turn + player.FallenTimer, 40);
 
 					if (distanceToBall <= playerReach)
 					{

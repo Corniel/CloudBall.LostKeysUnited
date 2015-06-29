@@ -38,7 +38,7 @@ namespace CloudBall.Engines.LostKeysUnited
 				
 		public Velocity ToVelocity(IPoint ball, IPoint target)
 		{
-			Velocity velocity = new Velocity(ball.X - target.X,ball.Y - target.Y);
+			Velocity velocity = new Velocity(target.X - ball.X, target.Y - ball.Y);
 			return velocity.Scale(m_Value * PowerToSpeed);
 		}
 

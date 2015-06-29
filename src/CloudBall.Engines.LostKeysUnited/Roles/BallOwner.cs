@@ -7,6 +7,11 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 {
 	public class BallOwner : IRole
 	{
+		public static readonly Position TopCorner = Goal.Other.Top + new Velocity(0, 60);
+		public static readonly Position BottomCorner = Goal.Other.Bottom - new Velocity(0, 60);
+
+		public static readonly Position[] GoalTargets = new Position[] { Goal.Other.Center, TopCorner, BottomCorner };
+
 		public static readonly Angle TwoStandardDeviation = new Angle(0.4);
 
 		public const float SafeTurnsFactor = 1;
@@ -54,8 +59,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 						if(catchUp == null || catchUp.Turn > 5)
 						{
 							var turns = catchUp == null ? path.Count : catchUp.Turn - 1;
-							var score = 0f;
-							score += (float)Goal.Other.GetDistance(target) - (float)distanceToGoal;
+							var score = (float)Goal.Other.GetDistance(target) - (float)distanceToGoal - turns;
 							options.Add(new PotentialAction(score, Actions.Move(owner, target)));
 						}
 					}
@@ -65,7 +69,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 
 		public void AddShotOnGoal(PlayerInfo owner, Distance distanceToGoal, GameState state, List<PotentialAction> options)
 		{
-			if(distanceToGoal < 700d)
+			if(distanceToGoal < 600d)
 			{
 				var veloTop = Goal.Other.Top - owner.Position;
 				var veloBot = Goal.Other.Bottom - owner.Position;
@@ -82,6 +86,21 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 				}
 				else
 				{
+					for (var p = 7.0f; p <= 10f; p += 1.0f)
+					{
+						foreach (var tar in GoalTargets)
+						{
+							Power power = p;
+							var velocity = power.ToVelocity(owner, tar);
+							var path = BallPath.Create(owner.Position, velocity, 7, 100);
+							var catchUp = path.GetCatchUps(state.Current.OtherPlayers).FirstOrDefault();
+							if (catchUp == null)
+							{
+								options.Add(new PotentialAction(1000, Actions.Shoot(owner, tar, power)));
+								return;
+							}
+						}
+					}
 					options.Add(new PotentialAction(0, Actions.ShootOnGoal(owner, Power.Maximum)));
 				}
 			}
@@ -107,7 +126,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 			var distance = Distance.Between(owner, action.Target);
 			if (distance > MaximumPass) { return double.NaN; }
 
-			var turns = (double)distance / (double)action.Power;
+			var turns = 1.5 * (double)distance / (double)action.Power;
 
 			var velocity = action.Power.ToVelocity(owner, action.Target);
 
@@ -116,7 +135,11 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 			var catchUp = catchUps.FirstOrDefault();
 			if (catchUp != null && catchUp.Player.Team == TeamType.Own)
 			{
-				return ((double)Goal.Other.GetDistance(catchUp.Position) - (double)Goal.Other.GetDistance(owner)) + catchUp.Turn;
+				// only pass back when we are on the other half.
+				if (catchUp.Position.X > Game.Field.CenterX || catchUp.Position.X > owner.Position.X)
+				{
+					return ((double)Goal.Other.GetDistance(catchUp.Position) - (double)Goal.Other.GetDistance(owner)) - catchUp.Turn;
+				}
 			}
 			return double.NaN;
 		}

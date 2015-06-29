@@ -2,176 +2,168 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D0EEFAB9-A5BE-4CA4-93FE-1575E1381978}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_5.3</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProjectGuid>{D0EEFAB9-A5BE-4CA4-93FE-1575E1381978}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
+	<AssemblyName>LostKeysUnited_5.4</AssemblyName>
+	<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+	<ApplicationIcon>
+	</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CloudBall 1.0.0.0\Common.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.XML" />
+	<Reference Include="Common">
+	  <SpecificVersion>False</SpecificVersion>
+	  <HintPath>..\packages\CloudBall 1.0.0.0\Common.dll</HintPath>
+	</Reference>
+	<Reference Include="log4net">
+	  <SpecificVersion>False</SpecificVersion>
+	  <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+	</Reference>
+	<Reference Include="System" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\DropBall.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\IAction.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\Move.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\NoAction.cs" />
-    <Compile Include="IActions\PickUpBall.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\PotentialAction.cs" />
-    <Compile Include="IActions\Shoot.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\ShootOnGoal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\Tackle.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="IActions\Wait.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Angle.cs" />
-    <Compile Include="LostKeysUnited.cs" />
-    <Compile Include="Conversion\AngleTypeConverter.cs" />
-    <Compile Include="Conversion\DistanceTypeConverter.cs" />
-    <Compile Include="Distance.cs" />
-    <Compile Include="DistanceExtensions.cs" />
-    <Compile Include="Guard.cs" />
-    <Compile Include="Logging.cs" />
-    <Compile Include="IPoint.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\BallInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\BallPath.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\CatchUp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\FieldInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Game.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\Goal.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\PlayerInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\PlayerInfoExtensions.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\PlayerPath.cs" />
-    <Compile Include="Models\PlayerQueue.cs" />
-    <Compile Include="Models\Zone.cs" />
-    <Compile Include="Models\Zones.cs" />
-    <Compile Include="Position.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\TeamType.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\TurnInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Models\GameState.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Power.cs" />
-    <Compile Include="Role.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Roles\BallCatcher.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Roles\BallOwner.cs" />
-    <Compile Include="Roles\IRole.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Roles\Keeper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Roles\PickUp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Roles\Sweeper.cs" />
-    <Compile Include="Roles\Tackler.cs" />
-    <Compile Include="Scenario.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Scenarios\Default.cs" />
-    <Compile Include="Velocity.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="PlayerMapping.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="Actions.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\DropBall.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\IAction.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\Move.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\NoAction.cs" />
+	<Compile Include="IActions\PickUpBall.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\PotentialAction.cs" />
+	<Compile Include="IActions\Shoot.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\ShootOnGoal.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\Tackle.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="IActions\Wait.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Angle.cs" />
+	<Compile Include="LostKeysUnited.cs" />
+	<Compile Include="Conversion\AngleTypeConverter.cs" />
+	<Compile Include="Conversion\DistanceTypeConverter.cs" />
+	<Compile Include="Distance.cs" />
+	<Compile Include="DistanceExtensions.cs" />
+	<Compile Include="Guard.cs" />
+	<Compile Include="Logging.cs" />
+	<Compile Include="IPoint.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\BallInfo.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\BallPath.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\CatchUp.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\FieldInfo.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\Game.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\Goal.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\PlayerInfo.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\PlayerInfoExtensions.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\PlayerPath.cs" />
+	<Compile Include="Models\PlayerQueue.cs" />
+	<Compile Include="Models\Zone.cs" />
+	<Compile Include="Models\Zones.cs" />
+	<Compile Include="Position.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\TeamType.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\TurnInfo.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Models\GameState.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Power.cs" />
+	<Compile Include="Role.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Roles\BallCatcher.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Roles\BallOwner.cs" />
+	<Compile Include="Roles\IRole.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Roles\Keeper.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Roles\PickUp.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Roles\Sweeper.cs" />
+	<Compile Include="Roles\Tackler.cs" />
+	<Compile Include="Scenario.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="Scenarios\Default.cs" />
+	<Compile Include="Velocity.cs">
+	  <SubType>Code</SubType>
+	</Compile>
+	<Compile Include="PlayerMapping.cs" />
+	<Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+	<None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CloudBall\src\CloudBall.Common\CloudBall.Common.csproj">
-      <Project>{21f7188f-6b18-4ef9-9193-df23ae75b60a}</Project>
-      <Name>CloudBall.Common</Name>
-    </ProjectReference>
+	<ProjectReference Include="..\..\..\CloudBall\src\CloudBall.Common\CloudBall.Common.csproj">
+	  <Project>{21f7188f-6b18-4ef9-9193-df23ae75b60a}</Project>
+	  <Name>CloudBall.Common</Name>
+	</ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-	   Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

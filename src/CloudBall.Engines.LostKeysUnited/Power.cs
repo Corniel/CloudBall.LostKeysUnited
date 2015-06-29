@@ -35,13 +35,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public static explicit operator float(Power val) { return val.m_Value; }
 
 		#endregion
-				
-		public Velocity ToVelocity(IPoint ball, IPoint target)
-		{
-			Velocity velocity = new Velocity(target.X - ball.X, target.Y - ball.Y);
-			return velocity.Scale(m_Value * PowerToSpeed);
-		}
-
+		
 		public override string ToString() { return m_Value.ToString(); }
 
 		/// <summary>Returns a System.String that represents the current distance for debug purposes.</summary>

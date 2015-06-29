@@ -12,6 +12,9 @@ namespace CloudBall.Engines.LostKeysUnited
 		public static readonly Velocity Zero = default(Velocity);
 
 		/// <summary>Creates a new velocity.</summary>
+		public Velocity(Double x, Double y) : this((Single)x, (Single)y) { }
+
+		/// <summary>Creates a new velocity.</summary>
 		public Velocity(Single x, Single y)
 		{
 			this.x = x;
@@ -83,18 +86,12 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		#endregion
 
-		//public override string ToString() { return string.Format(CultureInfo.CurrentCulture, "({0}, {1})", X, Y); }
-
 		public override bool Equals(object obj) { return base.Equals(obj); }
 		public override int GetHashCode() { return x.GetHashCode() ^ y.GetHashCode(); }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay { get { return string.Format(CultureInfo.InvariantCulture, "Speed: {0:0.00},  angle {1:0.0}°", Speed, (double)Angle * 180d / Math.PI); } }
 
-		//public static Velocity FromAngle(Single angle, Single length = 1f)
-		//{
-		//	var vector = new Velocity(Mathematics.Sin(angle) * length, Mathematics.Cos(angle) * length);
-		//	return vector;
-		//}
+		public override string ToString() { return string.Format("({0}, {1})", X, Y); }
 	}
 }

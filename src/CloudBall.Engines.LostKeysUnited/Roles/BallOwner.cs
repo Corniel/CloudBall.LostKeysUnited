@@ -91,7 +91,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 						foreach (var tar in GoalTargets)
 						{
 							Power power = p;
-							var velocity = power.ToVelocity(owner, tar);
+							var velocity = Shoot.ToTarget(owner, target, power);
 							var path = BallPath.Create(owner.Position, velocity, 7, 100);
 							var catchUp = path.GetCatchUps(state.Current.OtherPlayers).FirstOrDefault();
 							if (catchUp == null)
@@ -128,7 +128,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 
 			var turns = 1.5 * (double)distance / (double)action.Power;
 
-			var velocity = action.Power.ToVelocity(owner, action.Target);
+			var velocity = Shoot.ToTarget(owner, action.Target, action.Power);
 
 			var path = BallPath.Create(owner.Position, velocity, 7, (int)turns);
 			var catchUps = path.GetCatchUps(owner.GetOther(state.Current.Players)).ToList();

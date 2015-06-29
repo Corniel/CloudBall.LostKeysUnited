@@ -31,7 +31,7 @@ namespace CloudBall.Engines.LostKeysUnited
 		public readonly Position Center = new Position(Common.Field.Borders.Center.X, Common.Field.Borders.Center.Y);
 
 		public bool IsLeft(IPoint point) { return point.X < MinimumX; }
-		public bool IsRight(IPoint point) { return point.X < MinimumX; }
+		public bool IsRight(IPoint point) { return point.X > MaximumX; }
 		public bool IsAbove(IPoint point){ return point.Y < MinimumY;}
 		public bool IsUnder(IPoint point){ return point.Y > MaximumY;}
 	}

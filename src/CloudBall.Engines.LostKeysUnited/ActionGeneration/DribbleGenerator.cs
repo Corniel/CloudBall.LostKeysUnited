@@ -34,7 +34,7 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 
 		public void Generate(PlayerInfo owner, GameState state, ActionCandidates candidates)
 		{
-			if (!owner.IsBallOwner || owner.CanBetTackled.Any()) { return; }
+			if (!owner.IsBallOwner || owner.CanBeTackled.Any()) { return; }
 
 			foreach (var direction in WalkingDirections)
 			{

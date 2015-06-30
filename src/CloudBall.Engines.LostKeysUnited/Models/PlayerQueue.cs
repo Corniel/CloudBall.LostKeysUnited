@@ -23,6 +23,12 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			AddRange(Guard.NotNull(players, "players").Where(player => player.CanMove));
 		}
 
+		/// <summary>Gets the actions.</summary>
+		public List<IAction> Actions { get; protected set; }
+
+		/// <summary>Returns true if empty, otherwise false.</summary>
+		public bool IsEmty { get { return Count == 0; } }
+
 		/// <summary>De-queues the player attached to action.</summary>
 		public bool Dequeue(IAction action)
 		{
@@ -36,7 +42,6 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			return player != null;
 		}
 
-		/// <summary>Gets the actions.</summary>
-		public List<IAction> Actions { get; protected set; }
+		
 	}
 }

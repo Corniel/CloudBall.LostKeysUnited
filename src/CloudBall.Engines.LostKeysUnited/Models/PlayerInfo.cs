@@ -12,7 +12,7 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 	{
 		public PlayerInfo()
 		{
-			this.CanBetTackled = new List<int>();
+			this.CanBeTackled = new List<int>();
 		}
 
 		public static PlayerInfo Create(Common.Player player, Common.Ball ball, TeamType team, IEnumerable<Common.Player> other)
@@ -32,11 +32,11 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				Velocity = player.Velocity,
 				IsBallOwner = player == ball.Owner,
 				CanPickUpBall = player.CanPickUpBall(ball),
-				CanBetTackled = tackled.Select(p => PlayerMapping.GetId(p.PlayerType, TeamType.Other)).ToList(),
+				CanBeTackled = tackled.Select(p => PlayerMapping.GetId(p.PlayerType, TeamType.Other)).ToList(),
 				FallenTimer = player.FallenTimer,
 				TackleTimer = player.TackleTimer,
 			};
-			info.DistanceToOwnGoal = Goal.Other.GetDistance(info);
+			info.DistanceToOwnGoal = Goal.Own.GetDistance(info);
 			info.DistanceToOtherGoal = Goal.Other.GetDistance(info);
 			return info;
 		}
@@ -70,9 +70,9 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 
 		public bool CanTackle(PlayerInfo other)
 		{
-			return CanBetTackled.Contains(other.Id);
+			return CanBeTackled.Contains(other.Id);
 		}
-		public List<int> CanBetTackled { get; set; }
+		public List<int> CanBeTackled { get; set; }
 
 		[DebuggerBrowsable(DebuggerBrowsableState.Never), ExcludeFromCodeCoverage]
 		private string DebuggerDisplay

@@ -10,6 +10,7 @@ namespace CloudBall.Engines.LostKeysUnited
 	{
 		public BallPath Path { get; set; }
 		public List<CatchUp> CatchUps { get; set; }
+		public TeamType Opposition { get; set; }
 
 		public TurnInfo Current { get; protected set; }
 		public int Turn { get { return Current == null ? int.MinValue : Current.Turn; } }
@@ -20,6 +21,15 @@ namespace CloudBall.Engines.LostKeysUnited
 			this[info.Turn] = info;
 			Path = BallPath.Create(info.Ball, Game.LastTurn - info.Turn);
 			CatchUps = Path.GetCatchUps(info.Players).ToList();
+			Opposition = info.Ball.Team;
+			if (Opposition == TeamType.None)
+			{
+				var catchUp = CatchUps.FirstOrDefault();
+				if (catchUp != null)
+				{
+					Opposition = catchUp.Player.Team;
+				}
+			}
 		}
 
 		public void Add(Common.Team myTeam, Common.Team enemyTeam, Common.Ball ball, Common.MatchInfo matchInfo)

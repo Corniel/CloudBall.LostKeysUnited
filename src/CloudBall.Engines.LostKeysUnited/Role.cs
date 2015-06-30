@@ -10,7 +10,14 @@ namespace CloudBall.Engines.LostKeysUnited
 		public static readonly IRole Sweeper = new Sweeper();
 		public static readonly IRole BallCatcher = new BallCatcher();
 		public static readonly IRole Keeper = new Keeper();
-		public static readonly IRole FirstManMarker = new ManMarker(0);
-		public static readonly IRole SecondManMarker = new ManMarker(1);
+		public static readonly IRole Sandwicher = new Sandwicher();
+		public static readonly IRole[] ManMarkers = new IRole[] 
+		{ 
+			new ManMarker(0), 
+			new ManMarker(1), 
+			new ManMarker(2), 
+			new ManMarker(3), 
+			new ManMarker(4), 
+		};
 	}
 }

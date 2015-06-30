@@ -2,10 +2,11 @@
 using CloudBall.Engines.LostKeysUnited.Roles;
 using System.Collections.Generic;
 using System.Linq;
+using CloudBall.Engines.LostKeysUnited;
 
 namespace CloudBall.Engines.LostKeysUnited.Scenarios
 {
-	public class Default
+	public class Default : CloudBall.Engines.LostKeysUnited.Scenarios.IScenario
 	{
 		public Default()
 		{
@@ -17,8 +18,9 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 				Role.Sweeper,
 				Role.BallCatcher,
 				Role.Keeper,
-				Role.FirstManMarker,
-				Role.SecondManMarker,
+				Role.ManMarkers[0],
+				Role.Sandwicher,
+				Role.ManMarkers[1],
 			};
 		}
 		public List<IRole> Roles { get; set; }
@@ -29,6 +31,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			{
 				role.Apply(state, queue);
 			}
+			
 			var zones = Zones.Create(state);
 
 			foreach (var zone in zones.SingleOccupiedByOwn)
@@ -41,7 +44,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			}
 			foreach (var zone in zones.NotOccupiedByOwn)
 			{
-				var closedBy = zone.Target.GetClosedBy(queue);
+				var closedBy = zone.Target.GetClosestBy(queue);
 
 				if (closedBy != null)
 				{
@@ -50,7 +53,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 			}
 			if (zones.BallOwnerZone != null)
 			{
-				var closedBy = zones.BallOwnerZone.Target.GetClosedBy(queue);
+				var closedBy = zones.BallOwnerZone.Target.GetClosestBy(queue);
 
 				if (closedBy != null)
 				{

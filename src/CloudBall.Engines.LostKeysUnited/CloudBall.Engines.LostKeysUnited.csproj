@@ -148,16 +148,21 @@
     <Compile Include="Roles\Keeper.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Roles\ManMarker.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Roles\PickUp.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Roles\ManMarker.cs" />
+    <Compile Include="Roles\Sandwitcher.cs" />
     <Compile Include="Roles\Sweeper.cs" />
     <Compile Include="Roles\Tackler.cs" />
     <Compile Include="Scenario.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Scenarios\Default.cs" />
+    <Compile Include="Scenarios\Defensive.cs" />
+    <Compile Include="Scenarios\IScenario.cs" />
     <Compile Include="Velocity.cs">
       <SubType>Code</SubType>
     </Compile>

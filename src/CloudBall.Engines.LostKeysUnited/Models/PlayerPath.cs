@@ -31,7 +31,7 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			{
 				dis += (turns - 255) * MaximumVelocity;
 			}
-			return dis;
+			return dis + tolerance;
 			
 		}
 		private static readonly float[,] Distances;

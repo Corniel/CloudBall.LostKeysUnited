@@ -5,7 +5,7 @@ using System.IO;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	[BotName("Lost Keys United 5.4")]
+	[BotName("Lost Keys United 5.5")]
 	public class LostKeysUnited : Common.ITeam
 	{
 		/// <summary>Gets the location of the assembly of the bot.</summary>
@@ -17,7 +17,10 @@ namespace CloudBall.Engines.LostKeysUnited
 			}
 		}
 
-		public static ILog Log = LogManager.GetLogger(typeof(LostKeysUnited));
+		public static ILog Log = LogManager.GetLogger(
+			((BotNameAttribute)(typeof(LostKeysUnited)
+			.GetCustomAttributes(typeof(BotNameAttribute), false)[0]))
+			.Name);
 
 		/// <summary>Creates a new instance of the bot.</summary>
 		public LostKeysUnited()
@@ -28,8 +31,6 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		/// <summary>Gets the state of this game.</summary>
 		public GameState History { get; protected set; }
-
-		//public IScenario[] Scenarios { get; private set; }
 
 		/// <summary>The central method that is used by the Game Engine to run the bot.</summary>
 		public void Action(Common.Team myTeam, Common.Team enemyTeam, Common.Ball ball, Common.MatchInfo matchInfo)

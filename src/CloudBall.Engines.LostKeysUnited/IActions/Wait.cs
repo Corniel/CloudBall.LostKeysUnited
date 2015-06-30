@@ -17,7 +17,7 @@
 		{
 			try
 			{
-				mapping[id].ActionDropBall();
+				mapping[id].ActionWait();
 			}
 			catch (System.NullReferenceException) { }
 		}

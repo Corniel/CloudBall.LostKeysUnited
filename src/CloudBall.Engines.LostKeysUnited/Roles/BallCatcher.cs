@@ -9,7 +9,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 		{
 			var ball = state.Current.Ball;
 
-			if (ball.IsOwn || state.Current.OwnPlayers.Any(player => player.CanPickUpBall)) { return false; }
+			if (ball.HasOwner || state.Current.OwnPlayers.Any(player => player.CanPickUpBall)) { return false; }
 
 			var catchUp = state.CatchUps.FirstOrDefault(c => queue.Contains(c.Player));
 

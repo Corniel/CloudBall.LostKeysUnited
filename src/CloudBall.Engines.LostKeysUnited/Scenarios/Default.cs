@@ -17,6 +17,8 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 				Role.Sweeper,
 				Role.BallCatcher,
 				Role.Keeper,
+				Role.FirstManMarker,
+				Role.SecondManMarker,
 			};
 		}
 		public List<IRole> Roles { get; set; }

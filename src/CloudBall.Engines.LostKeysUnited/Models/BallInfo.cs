@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
@@ -16,12 +15,17 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			Velocity = vel;
 			PickUpTimer = pickuptimer;
 			Owner = owner;
+			DistanceToOwnGoal = Goal.Own.GetDistance(pos);
+			DistanceToOtherGoal = Goal.Other.GetDistance(pos);
 		}
 
 		public PlayerInfo Owner { get; private set; }
 		public Position Position { get; private set; }
 		public Velocity Velocity { get; private set; }
 		public int PickUpTimer { get; private set; }
+
+		public Distance DistanceToOwnGoal { get; set; }
+		public Distance DistanceToOtherGoal { get; set; }
 
 		public TeamType Team { get { return Owner == null ? TeamType.None : Owner.Team; } }
 		public bool IsOwn { get { return Team == TeamType.Own; } }

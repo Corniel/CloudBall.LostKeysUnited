@@ -36,29 +36,38 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				FallenTimer = player.FallenTimer,
 				TackleTimer = player.TackleTimer,
 			};
+			info.DistanceToOwnGoal = Goal.Other.GetDistance(info);
+			info.DistanceToOtherGoal = Goal.Other.GetDistance(info);
 			return info;
 		}
 		public int Id { get; set; }
 		public TeamType Team { get { return (TeamType)(Id >> 3); } }
 		public int Number { get { return Id & 7; } }
 
+		public bool IsOwn { get { return Team == TeamType.Own; } }
+		public bool IsOther { get { return Team == TeamType.Other; } }
+
 		public Position Position { get; set; }
-		public Velocity Velocity { get;  set; }
+		public Velocity Velocity { get; set; }
+
+		public Distance DistanceToOwnGoal { get; set; }
+		public Distance DistanceToOtherGoal { get; set; }
+
 		/// <summary>The fallen timer indicates how long it will take before a player
 		/// can move again.
 		/// </summary>
 		/// <remarks>
 		/// A negative value indicates that a player can not move.
 		/// </remarks>
-		public int FallenTimer { get;  set; }
-		public int TackleTimer { get;  set; }
+		public int FallenTimer { get; set; }
+		public int TackleTimer { get; set; }
 
 		/// <summary>Returns true if the player can move.</summary>
 		public bool CanMove { get { return FallenTimer == 0; } }
 
 		public bool CanPickUpBall { get; set; }
 		public bool IsBallOwner { get; set; }
-		
+
 		public bool CanTackle(PlayerInfo other)
 		{
 			return CanBetTackled.Contains(other.Id);

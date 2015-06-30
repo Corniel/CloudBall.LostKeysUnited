@@ -4,11 +4,11 @@ using System.Globalization;
 
 namespace CloudBall.Engines.LostKeysUnited.IActions
 {
-	public struct PotentialAction : IComparable, IComparable<PotentialAction>
+	public struct ActionCandidate : IComparable, IComparable<ActionCandidate>
 	{
-		public static readonly PotentialAction None = new PotentialAction(float.MinValue, Actions.None);
+		public static readonly ActionCandidate None = new ActionCandidate(float.MinValue, Actions.None);
 
-		public PotentialAction(float score, IAction action)
+		public ActionCandidate(float score, IAction action)
 		{
 			this.score = score;
 			this.action = action;
@@ -25,13 +25,13 @@ namespace CloudBall.Engines.LostKeysUnited.IActions
 		/// <summary>Returns true if this is the none action.</summary>
 		public bool IsNone { get { return None.Equals(this); } }
 
-		public int CompareTo(PotentialAction other)
+		public int CompareTo(ActionCandidate other)
 		{
 			return other.Score.CompareTo(Score);
 		}
 		public int CompareTo(object obj)
 		{
-			return CompareTo((PotentialAction)obj);
+			return CompareTo((ActionCandidate)obj);
 		}
 
 		public override string ToString()

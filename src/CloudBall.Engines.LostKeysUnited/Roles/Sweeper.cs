@@ -15,8 +15,7 @@ namespace CloudBall.Engines.LostKeysUnited.Roles
 
 				if (sweeper != null)
 				{
-					queue.Dequeue(Actions.Move(sweeper.Player, sweeper.Position));
-					return true;
+					return queue.Dequeue(Actions.Move(sweeper.Player, sweeper.Position));
 				}
 			}
 			return false;

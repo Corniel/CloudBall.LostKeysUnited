@@ -44,20 +44,20 @@ namespace CloudBall.Engines.LostKeysUnited
 		public Velocity FlipVertical { get { return new Velocity(X, -Y); } }
 
 		/// <summary>Gets the normalized Velocity (speed = 1).</summary>
-		public Velocity Normalized { get { return new Velocity(X / (float)Speed, Y / (float)Speed); } }
+		public Velocity Normalized { get { return new Velocity(X / Speed, Y / Speed); } }
 
 		/// <summary>Scales the velocity to the preferred length.</summary>
 		public Velocity Scale(double length)
 		{
-			return new Velocity((float)length * X / (float)Speed, (float)length * Y / (float)Speed);
+			return new Velocity(length * X / Speed, length * Y / Speed);
 		}
 
 		/// <summary>Rotates the vector.</summary>
 		public Velocity Rotate(Angle angle)
 		{
 			var nX = angle.Cos() * X - angle.Sin() * Y;
-			var nY = angle.Cos() * Y - angle.Sin() * X;
-			return new Velocity((float)nX, (float)nY);
+			var nY = angle.Sin() * X + angle.Cos() * Y;
+			return new Velocity(nX, nY);
 		}
 		
 		#region Operations

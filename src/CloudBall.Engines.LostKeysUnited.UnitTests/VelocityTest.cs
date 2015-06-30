@@ -12,22 +12,53 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 		public void Rotate_1Pi_Rotated180degrees()
 		{
 			var act = TestStruct.Rotate((Single)Math.PI);
-			var exp = new Velocity(-8.5f, -2.299999f);
+			var exp = new Velocity(-8.5f, -2.3f);
 
-			Assert.AreEqual(exp.ToString(), act.ToString());
+			CloudBallAssert.AreEqual(exp, act);
 		}
 
 		[Test]
-		public void GetAngle_TwoVectors_90Dgrees()
+		public void Rotate_100x0yPlus45_71x71y()
 		{
-			//var v0 = new Velocity(0, 13);
-			//var v1 = new Velocity(8, 0);
+			var velocity = new Velocity(10, 0);
+			var angle = new Angle(Math.PI / 4d);
+			var act = velocity.Rotate(angle);
+			var exp = new Velocity(Math.Sqrt(50), Math.Sqrt(50));
 
-			//var act = v0.GetAngle(v1);
-			//var exp = Mathematics.PI / 2f;
+			CloudBallAssert.AreEqual(exp, act);
+		}
 
-			//Assert.AreEqual(exp, act);
+		[Test]
+		public void Rotate_100x0yPlus135_71x71y()
+		{
+			var velocity = new Velocity(10, 0);
+			var angle = new Angle(3 * Math.PI / 4d);
+			var act = velocity.Rotate(angle);
+			var exp = new Velocity(-Math.Sqrt(50), Math.Sqrt(50));
 
+			CloudBallAssert.AreEqual(exp, act);
+		}
+
+		[Test]
+		public void Rotate_Minus45_71x71y()
+		{
+			var velocity = new Velocity(10, 0);
+			var angle = new Angle(-Math.PI / 4d);
+			var act = velocity.Rotate(angle);
+			var exp = new Velocity(Math.Sqrt(50), -Math.Sqrt(50));
+
+			CloudBallAssert.AreEqual(exp, act);
+		}
+
+		[Test]
+		public void Rotate_Minus135_71x71y()
+		{
+			var velocity = new Velocity(10, 0);
+			var angle = new Angle(-3 * Math.PI / 4d);
+			var act = velocity.Rotate(angle);
+			var exp = new Velocity(-Math.Sqrt(50), -Math.Sqrt(50));
+
+			CloudBallAssert.AreEqual(exp, act);
 		}
 
 	}

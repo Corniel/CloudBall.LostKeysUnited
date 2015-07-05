@@ -68,6 +68,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Roles\KeeperTest.cs" />
     <Compile Include="Simulation\GameSimulator.cs" />
     <Compile Include="Simulation\ShootSimulator.cs">
       <SubType>Code</SubType>

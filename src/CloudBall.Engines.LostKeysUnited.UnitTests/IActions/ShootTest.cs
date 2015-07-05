@@ -27,7 +27,7 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests.IActions
 			var act = Shoot.ToTarget(source, target, power);
 			var exp = new Velocity(Math.Sqrt(18), Math.Sqrt(18));
 
-			Assert.AreEqual(exp, act);
+			CloudBallAssert.AreEqual(exp, act);
 		}
 
 		[Test]

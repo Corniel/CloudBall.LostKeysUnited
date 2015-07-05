@@ -40,6 +40,9 @@ namespace CloudBall.Engines.LostKeysUnited
 		/// <summary>The inner value of the distance.</summary>
 		private Double m_Value;
 
+		/// <summary>Gets the squared distance.</summary>
+		public double Squared { get { return m_Value; } }
+
 		#endregion
 	
 		#region (XML) (De)serialization

@@ -7,7 +7,7 @@ namespace CloudBall.Engines.LostKeysUnited
 	[DebuggerDisplay("{DebuggerDisplay}")]
 	public struct Power
 	{
-		public const double PowerToSpeed = 1.2;
+		public const float PowerToSpeed = 1.2f;
 		public static readonly Power Minimum = new Power(0);
 		public static readonly Power Maximum = new Power(10);
 
@@ -21,7 +21,12 @@ namespace CloudBall.Engines.LostKeysUnited
 
 		private float m_Value;
 
+		/// <summary>Gets the initial speed associated with the power.</summary>
+		public float Speed { get { return m_Value * PowerToSpeed; } }
+
 		#endregion
+
+
 
 		/// <summary>Multiplies the power.</summary>
 		public Power Multiply(float factor) { return m_Value * factor; }

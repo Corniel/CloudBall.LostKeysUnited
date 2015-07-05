@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CloudBall.Engines.LostKeysUnited.Models
@@ -28,6 +29,16 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 
 		/// <summary>Gets the effective distance.</summary>
 		public Distance Distance { get { return Count < 2 ? Distance.Zero : Distance.Between(this[0], this[Count - 1]); } }
+
+		/// <summary>Gets the distance given an initial power.</summary>
+		public static Distance GetDistance(float initialSpeed, int turns)
+		{
+			var key = SpeedToKey(initialSpeed);
+
+			var dis = Distances[key, Math.Min(1024, turns)];
+			return dis;
+		}
+		private static readonly float[,] Distances;
 
 		/// <summary>Gets the catch ups for the ball path.</summary>
 		public IEnumerable<CatchUp> GetCatchUps(IEnumerable<PlayerInfo> players)
@@ -98,5 +109,26 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 			}
 			return path;
 		}
+
+		/// <summary>Initializes the distances.</summary>
+		static BallPath()
+		{
+			Distances = new float[1001, 1024];
+
+			for (var initialSpeed = 0f; initialSpeed < 10.1f; initialSpeed += 0.1f)
+			{
+				var key = SpeedToKey(initialSpeed);
+				var dis = initialSpeed;
+				var speed = initialSpeed;
+
+				for (var turn = 1; turn < 1024; turn++)
+				{
+					Distances[key, turn] = dis;
+					speed *= Accelaration;
+					dis += speed;
+				}
+			}
+		}
+		private static int SpeedToKey(float speed) { return (int)(speed * 10 + 0.5); }
 	}
 }

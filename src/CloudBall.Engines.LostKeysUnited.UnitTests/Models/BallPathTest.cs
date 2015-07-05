@@ -76,6 +76,40 @@ namespace CloudBall.Engines.LostKeysUnited.UnitTests
 		}
 
 		[Test]
+		public void Passing()
+		{
+			var angles = new Angle[51, 600];
+
+			var sw = Stopwatch.StartNew();
+
+			for (var p = 5f; p <= 10; p += 0.1f)
+			{
+				for (var d = 200; d < 800; d++)
+				{
+					var d2 = d* d;
+					var power = new Power(p);
+					var speed = power.Speed;
+					for (var t = 1; t < 1024; t++)
+					{
+						if (p > 9.8f)
+						{
+						}
+						var ball = BallPath.GetDistance(speed, t);
+						var player = PlayerPath.GetDistance(3, t, 40);
+
+						if (ball.Squared + player.Squared > d2)
+						{
+							
+							var angle = Angle.Atan((double)player / (double)ball);
+							break;
+						}
+					}
+				}
+			}
+			Console.WriteLine(sw.Elapsed.TotalMilliseconds);
+		}
+
+		[Test]
 		public void Performance_Rnd()
 		{
 			var rnd = new Random(17);

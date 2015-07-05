@@ -1,11 +1,13 @@
 ﻿using CloudBall.Engines.LostKeysUnited.Models;
+using CloudBall.Engines.LostKeysUnited.Scenarios;
 using log4net;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace CloudBall.Engines.LostKeysUnited
 {
-	[BotName("Lost Keys United 5.5")]
+	[BotName("Lost Keys United 6.1")]
 	public class LostKeysUnited : Common.ITeam
 	{
 		/// <summary>Gets the location of the assembly of the bot.</summary>
@@ -26,11 +28,19 @@ namespace CloudBall.Engines.LostKeysUnited
 		public LostKeysUnited()
 		{
 			Logging.Setup();
-			History = new GameState();
+			State = new GameState();
+			Scenarios = new IScenario[]
+			{
+				Scenario.Defensive,
+				Scenario.Default
+			};
 		}
 
+		public IScenario[] Scenarios { get; protected set; }
+
+
 		/// <summary>Gets the state of this game.</summary>
-		public GameState History { get; protected set; }
+		public GameState State { get; protected set; }
 
 		/// <summary>The central method that is used by the Game Engine to run the bot.</summary>
 		public void Action(Common.Team myTeam, Common.Team enemyTeam, Common.Ball ball, Common.MatchInfo matchInfo)
@@ -38,20 +48,26 @@ namespace CloudBall.Engines.LostKeysUnited
 			try
 			{
 				var mapping = PlayerMapping.CreateForOwn(myTeam.Players, enemyTeam.Players);
-				History.Add(myTeam, enemyTeam, ball, matchInfo);
+				State.Add(myTeam, enemyTeam, ball, matchInfo);
 
-				var queue = new PlayerQueue(History.Current.OwnPlayers);
-				Scenario.Default.Apply(History, queue);
+				var fallen = State.Current.Players.Where(p => p.FallenTimer != 0).ToList();
+				var tackle = State.Current.Players.Where(p => p.TackleTimer != 0).ToList();
+		
+				var queue = new PlayerQueue(State.Current.OwnPlayers);
+				foreach (var scenario in Scenarios)
+				{
+					if (scenario.Apply(State, queue)) { break; }
+				}
 				mapping.Apply(queue.Actions);
 
 			}
 			catch (Exception x)
 			{
-				Log.Error(History.GetErrorMessage(), x);
+				Log.Error(State.GetErrorMessage(), x);
 			}
 			finally
 			{
-				History.Current.Finish();
+				State.Current.Finish();
 			}
 		}
 	}

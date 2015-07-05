@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudBall.Engines.LostKeysUnited</RootNamespace>
-    <AssemblyName>LostKeysUnited_5.5</AssemblyName>
+    <AssemblyName>LostKeysUnited_6.0</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

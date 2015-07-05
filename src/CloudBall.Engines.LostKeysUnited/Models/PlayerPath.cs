@@ -23,8 +23,8 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 		public static Distance GetDistance(float initialSpeed, int turns, float tolerance)
 		{
 			if (float.IsNaN(initialSpeed)) { initialSpeed = 0; }
-			var key = (int)(initialSpeed * 100f + 300.49f);
 
+			var key = SpeedToKey(initialSpeed);
 			var dis = Distances[key, Math.Min(255, turns)];
 
 			if (turns > 255)
@@ -32,7 +32,6 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				dis += (turns - 255) * MaximumVelocity;
 			}
 			return dis + tolerance;
-			
 		}
 		private static readonly float[,] Distances;
 		/// <summary>Gets the initial speed relative to the target to reach.</summary>
@@ -99,13 +98,11 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 		{
 			Distances = new float[601, 256];
 
-			for (var key = 0; key <= 600; key++)
+			for (var initialSpeed = -3f; initialSpeed < 3.001f; initialSpeed += 0.01f)
 			{
-				if (key == 600)
-				{
-				}
-				var speed = (key - 300f) / 100f;
-				var dis = speed;
+				var dis = initialSpeed;
+				var key = SpeedToKey(initialSpeed);
+				var speed = initialSpeed;
 
 				for (var turn = 1; turn < 256; turn++)
 				{
@@ -116,5 +113,6 @@ namespace CloudBall.Engines.LostKeysUnited.Models
 				}
 			}
 		}
+		private static int SpeedToKey(float speed) { return (int)(speed * 100f + 300.5f); }
 	}
 }

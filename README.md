@@ -3,6 +3,10 @@ Lost Keys United
 Lost Keys United is a AI that can play Cloud Ball. It's a fresh start after
 creating "De Wolkenhondjes" for the original challenge of Giraff.
 
+Version 6.0
+-----------
+Introduced defense field play, improved passing.
+
 Version 5.5 (1675)
 ------------------
 Fixed an important pass bug, and added decision making to the shot on goal. Not only try

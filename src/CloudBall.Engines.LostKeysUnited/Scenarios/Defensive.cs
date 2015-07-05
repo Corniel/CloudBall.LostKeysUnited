@@ -26,7 +26,7 @@ namespace CloudBall.Engines.LostKeysUnited.Scenarios
 
 			foreach (var target in other)
 			{
-				if (queue.IsEmty) { break; }
+				if (queue.Count < 3) { break; }
 
 				var defender = target.GetClosestBy(queue);
 				queue.Dequeue(Actions.Move(defender, target));

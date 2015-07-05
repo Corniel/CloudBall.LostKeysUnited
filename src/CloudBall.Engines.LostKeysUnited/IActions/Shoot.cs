@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using CloudBall.Engines.LostKeysUnited.Models;
+using System.Diagnostics;
 
 namespace CloudBall.Engines.LostKeysUnited.IActions
 {
@@ -24,7 +25,7 @@ namespace CloudBall.Engines.LostKeysUnited.IActions
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private IPoint target;
 
-			/// <summary>Gets the power to shoot with.</summary>
+		/// <summary>Gets the power to shoot with.</summary>
 		public Power Power { get { return power; } }
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		private Power power;
@@ -46,7 +47,7 @@ namespace CloudBall.Engines.LostKeysUnited.IActions
 		/// </returns>
 		public static Position WithVelocity(IPoint ball, Velocity velocity, Power power)
 		{
-			velocity = velocity.Scale((double)power * Power.PowerToSpeed);
+			velocity = velocity.Scale(power.Speed);
 			var target = new Position(ball.X + velocity.X, ball.Y + velocity.Y);
 			return target;
 		}
@@ -58,7 +59,46 @@ namespace CloudBall.Engines.LostKeysUnited.IActions
 		public static Velocity ToTarget(IPoint ball, IPoint target, Power power)
 		{
 			Velocity velocity = new Velocity(target.X - ball.X, target.Y - ball.Y);
-			return velocity.Scale((double)power * Power.PowerToSpeed);
+			return velocity.Scale(power.Speed);
 		}
+
+		public static Angle GetShootAngle(IPoint ball, IPoint opponent, Power power)
+		{
+			var speed = power.Speed;
+			var distance = (float)Distance.Between(ball, opponent);
+			return ShootAngles[SpeedToKey(speed), DistanceToKey(distance)];
+		}
+		private static readonly Angle[,] ShootAngles;
+
+		static Shoot()
+		{
+			ShootAngles = new Angle[51, 600];
+			for (var p =5f; p < 10.01f; p += 0.1f)
+			{
+				for (var d = 200; d < 800; d++)
+				{
+					var d2 = d * d;
+					var power = new Power(p);
+					var speed = power.Speed;
+					for (var t = 1; t < 1024; t++)
+					{
+						var ball = BallPath.GetDistance(speed, t);
+						var player = PlayerPath.GetDistance(3, t, 40);
+
+						if (ball.Squared + player.Squared > d2)
+						{
+							var angle = Angle.Atan((double)player / (double)ball);
+							var spe = SpeedToKey(speed);
+							var dis = DistanceToKey(d);
+							ShootAngles[spe, dis] = angle;
+							break;
+						}
+					}
+				}
+			}
+		}
+		private static int SpeedToKey(float speed) { return (int)((speed * 8.333333333f) - 49.5f); }
+		private static int DistanceToKey(float distance) { return (int)(distance - 199.5f); }
+
 	}
 }

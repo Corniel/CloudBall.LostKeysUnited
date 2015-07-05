@@ -10,7 +10,7 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 {
 	public class ShootOnGoalGenerator : IActionGenerator
 	{
-		public static readonly Distance MaximumShootDistance = 700d;
+		public static readonly Distance MaximumShootDistance = 600d;
 		public static readonly Position TopCorner = Goal.Other.Top + new Velocity(0, 60);
 		public static readonly Position BottomCorner = Goal.Other.Bottom - new Velocity(0, 60);
 		public static readonly Position[] GoalTargets = new Position[] { Goal.Other.Center, TopCorner, BottomCorner };
@@ -43,8 +43,8 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 				{
 					foreach (var goal in GoalTargets)
 					{
-						var velocity = Shoot.ToTarget(owner, target, power);
-						var path = BallPath.Create(owner.Position, velocity, 7, 100);
+						var velocity = Shoot.ToTarget(owner, goal, power);
+						var path = BallPath.Create(owner.Position, velocity, 7, 200);
 						var catchUp = path.GetCatchUps(state.Current.OtherPlayers).FirstOrDefault();
 						if (catchUp == null)
 						{

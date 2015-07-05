@@ -1,10 +1,7 @@
 ﻿using CloudBall.Engines.LostKeysUnited.IActions;
 using CloudBall.Engines.LostKeysUnited.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 {
@@ -13,7 +10,7 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 		public static readonly Power PassPower = 6.9f;
 		public const int PickUpTimer = 7;
 		public static readonly Distance MinimumPassDistance = 200d;
-		public const int MaximumPathLength = 200;
+		public const int MaximumPathLength = 300;
 
 		public static readonly Angle[] Angles = new Angle[]
 		{
@@ -69,7 +66,7 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 					var catchUp = path.GetCatchUps(state.Current.Players).FirstOrDefault();
 
 					// safe to pass.
-					if (catchUp == null || catchUp.Player.IsOwn)
+					if (catchUp == null || catchUp.Player.IsOwn && catchUp.Player != owner)
 					{
 						var length = catchUp == null ? path.Count : catchUp.Turn;
 						var target = catchUp == null ? path.Last() : catchUp.Position;

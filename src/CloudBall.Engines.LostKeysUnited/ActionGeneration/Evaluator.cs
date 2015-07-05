@@ -7,8 +7,10 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 	{
 		public static float GetPositionImprovement(IPoint source, IPoint target, int turns)
 		{
-			var gain = 2000f - Goal.Other.GetDistance(target);
-			return (float)gain;
+			float dSource = (float)Goal.Other.GetDistance(source);
+			float dTarget = (float)Goal.Other.GetDistance(target);
+			var gain = dSource- dTarget;
+			return gain / (float)turns;
 		}
 	}
 }

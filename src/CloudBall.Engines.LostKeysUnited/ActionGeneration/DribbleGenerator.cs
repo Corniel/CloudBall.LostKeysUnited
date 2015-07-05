@@ -27,6 +27,16 @@ namespace CloudBall.Engines.LostKeysUnited.ActionGeneration
 			new Velocity(60, +30),
 			new Velocity(30, +60),
 			new Velocity(10, +90),
+
+			new Velocity(-10, -90),
+			new Velocity(-30, -60),
+			new Velocity(-60, -30),
+			new Velocity(-99, +00),
+			new Velocity(-60, +30),
+			new Velocity(-30, +60),
+			new Velocity(-10, +90),
+
+
 		};
 
 		public const int MinimumDribbleLength = 3;

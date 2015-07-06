@@ -59,15 +59,15 @@
   <ItemGroup>
     <Reference Include="Client">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CloudBall 1.0.0.0\Client.dll</HintPath>
+      <HintPath>..\..\..\CloudBall\src\packages\CloudBall 1.0.0.0\Client.dll</HintPath>
     </Reference>
     <Reference Include="Common">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CloudBall 1.0.0.0\Common.dll</HintPath>
+      <HintPath>..\..\..\CloudBall\src\packages\CloudBall 1.0.0.0\Common.dll</HintPath>
     </Reference>
     <Reference Include="GameEngine">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CloudBall 1.0.0.0\GameEngine.dll</HintPath>
+      <HintPath>..\..\..\CloudBall\src\packages\CloudBall 1.0.0.0\GameEngine.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework">
       <Private>False</Private>
